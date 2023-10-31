@@ -28,6 +28,9 @@ function NavBar() {
             <Nav.Link as={Link} to="/parts">
               Запчасти
             </Nav.Link>
+            <Nav.Link as={Link} to="/works">
+              Наши работы
+            </Nav.Link>
             <Nav.Link as={Link} to="/about">
               О нас
             </Nav.Link>

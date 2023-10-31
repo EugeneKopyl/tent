@@ -3,3 +3,4 @@ export * from './ContactsPage';
 export * from './HomePage';
 export * from './PartsPage';
 export * from './ServicesPage';
+export * from './WorksPage';
