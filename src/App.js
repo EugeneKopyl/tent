@@ -6,6 +6,7 @@ import {
   ContactsPage,
   HomePage,
   PartsPage,
+  WorksPage,
   ServicesPage,
 } from './pages';
 import { ErrorPage } from './pages/ErrorPage';
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/parts" element={<PartsPage />} />
+        <Route path="/works" element={<WorksPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
         <Route path="*" element={<ErrorPage />} />
