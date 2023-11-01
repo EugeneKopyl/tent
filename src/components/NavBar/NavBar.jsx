@@ -1,15 +1,15 @@
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 function NavBar() {
   return (
     <Navbar fixed="top" expand="lg" className="bg-body-tertiary">
       <Container>
-        <Navbar.Brand as={Link} to="/">
+        <Navbar.Brand as={NavLink} to="/">
           <img
-            src={'main_logo.jpg'}
+            src={'images/main_logo.jpg'}
             width="30"
             height="30"
             className="d-inline-block align-top"
@@ -19,22 +19,22 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={NavLink} to="/">
               Главная
             </Nav.Link>
-            <Nav.Link as={Link} to="/services">
+            <Nav.Link as={NavLink} to="/services">
               Услуги
             </Nav.Link>
-            <Nav.Link as={Link} to="/parts">
+            <Nav.Link as={NavLink} to="/parts">
               Запчасти
             </Nav.Link>
-            <Nav.Link as={Link} to="/works">
+            <Nav.Link as={NavLink} to="/works">
               Наши работы
             </Nav.Link>
-            <Nav.Link as={Link} to="/about">
+            <Nav.Link as={NavLink} to="/about">
               О нас
             </Nav.Link>
-            <Nav.Link as={Link} to="/contacts">
+            <Nav.Link as={NavLink} to="/contacts">
               Контакты
             </Nav.Link>
           </Nav>

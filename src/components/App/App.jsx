@@ -1,6 +1,6 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-import NavBar from './components/NavBar';
+import NavBar from '../NavBar/NavBar';
 import {
   AboutPage,
   ContactsPage,
@@ -8,8 +8,8 @@ import {
   PartsPage,
   WorksPage,
   ServicesPage,
-} from './pages';
-import { ErrorPage } from './pages/ErrorPage';
+} from '../../components';
+import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 function App() {
   return (
