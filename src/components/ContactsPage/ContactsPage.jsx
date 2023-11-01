@@ -2,8 +2,64 @@ import React from 'react';
 
 export const ContactsPage = () => {
   return (
-    <div>
-      <h1>Контакты:</h1>
+    <div className="container">
+      <div className="row">
+        <div className="col-sm-6">
+          <h1>Наш адресс:</h1>
+          <p>
+            <address>улица Бабушкина, 27к5, Минск</address>
+          </p>
+          <p>
+            <a href="tel:+375447171617">+375 (44) 717-16-17</a>
+          </p>
+          <p>
+            <a href="tel:+375293761761">+375 (29) 376-17-61</a>
+          </p>
+        </div>
+        <div className="col-sm-6">
+          <table className="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col" colSpan={2}>
+                  Режим работы:
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Понедельник</th>
+                <td>08:30 – 18:00</td>
+              </tr>
+              <tr>
+                <th scope="row">Вторник</th>
+                <td>08:30 – 18:00</td>
+              </tr>
+              <tr>
+                <th scope="row">Среда</th>
+                <td>08:30 – 18:00</td>
+              </tr>
+              <tr>
+                <th scope="row">Четверг</th>
+                <td>08:30 – 18:00</td>
+              </tr>
+              <tr>
+                <th scope="row">Пятница</th>
+                <td>08:30 – 18:00</td>
+              </tr>
+              <tr className="table-danger">
+                <th scope="row">Суббота</th>
+                <td>Выходной</td>
+              </tr>
+              <tr className="table-danger">
+                <th scope="row">Воскресенье</th>
+                <td>Выходной</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <p>Мы на карте:</p>
       <div
         className="container"
         style={{ position: 'relative', overflow: 'hidden' }}
