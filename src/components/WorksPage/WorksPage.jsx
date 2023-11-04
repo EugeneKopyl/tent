@@ -69,12 +69,15 @@ export const WorksPage = () => {
       <div className="row">
         {images.map((image, index) => (
           <div key={index} className="col-md-4 col-lg-3 my-3">
-            <img
-              src={image}
-              alt="img"
-              className="img-fluid"
-              onClick={() => handleClick(image, index)}
-            ></img>
+            <div className='gallery-item-container'>
+              <img
+                src={image}
+                alt="img"
+                className="img-fluid"
+                onClick={() => handleClick(image, index)}
+                style={{ objectFit: 'cover', aspectRatio: '1/1' }}
+              ></img>
+            </div>
           </div>
         ))}
       </div>
