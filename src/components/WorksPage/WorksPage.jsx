@@ -69,7 +69,7 @@ export const WorksPage = () => {
       <div className="row">
         {images.map((image, index) => (
           <div key={index} className="col-md-4 col-lg-3 my-3">
-            <div className='gallery-item-container'>
+            <div className="gallery-item-container">
               <img
                 src={image}
                 alt="img"

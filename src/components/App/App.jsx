@@ -9,20 +9,18 @@ import {
   WorksPage,
   ServicesPage,
 } from '../../components';
-import { ErrorPage } from '../ErrorPage/ErrorPage';
 
 function App() {
   return (
     <div className="App">
       <NavBar></NavBar>
       <Routes>
-        <Route exact path="/" element={<HomePage />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/services" element={<ServicesPage />} />
         <Route path="/parts" element={<PartsPage />} />
         <Route path="/works" element={<WorksPage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </div>
   );
