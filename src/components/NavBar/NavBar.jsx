@@ -1,16 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 
 function NavBar() {
-  const [expanded, setExpanded] = useState(false);
-
   return (
     <Navbar
       sticky="top"
-      expanded={expanded}
+      collapseOnSelect
       expand="lg"
       className="bg-body-tertiary"
     >
@@ -91,31 +89,25 @@ function NavBar() {
             alt="Main logo"
           />
         </Navbar.Brand>
-        <Navbar.Toggle
-          aria-controls="basic-navbar-nav"
-          onClick={() => setExpanded(expanded ? false : 'expanded')}
-        />
-        <Navbar.Collapse
-          id="basic-navbar-nav"
-          onClick={() => setExpanded(expanded ? false : 'expanded')}
-        >
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/">
+            <Nav.Link as={NavLink} to="/" eventKey="1">
               Главная
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/services">
+            <Nav.Link as={NavLink} to="/services" eventKey="2">
               Услуги
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/parts">
+            <Nav.Link as={NavLink} to="/parts" eventKey="3">
               Запчасти
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/works">
+            <Nav.Link as={NavLink} to="/works" eventKey="4">
               Наши работы
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/about">
+            <Nav.Link as={NavLink} to="/about" eventKey="5">
               О нас
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/contacts">
+            <Nav.Link as={NavLink} to="/contacts" eventKey="6">
               Контакты
             </Nav.Link>
           </Nav>
