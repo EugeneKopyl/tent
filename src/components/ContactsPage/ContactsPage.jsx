@@ -1,13 +1,30 @@
 import React from 'react';
 
 export const ContactsPage = () => {
+  const openMap = () => {
+    const address = 'улица Бабушкина, 27к5, Минск';
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    let mapUrl;
+
+    if (isMobile) {
+      mapUrl = 'geo:0,0?q=' + encodeURIComponent(address);
+    } else {
+      // mapUrl = 'https://maps.app.goo.gl/113Z2dYA7ynDJSeDA'; // google
+      mapUrl = 'https://yandex.by/maps/-/CDeMB055'; // yandex
+    }
+
+    window.open(mapUrl);
+  };
+
   return (
     <div className="container pt-4">
       <div className="row">
         <div className="col-sm-6">
           <h1>Наш адрес:</h1>
-          <p>ООО ИнтерТентСервис</p>
-          <p className="d-flex">
+          <p style={{ fontWeight: 'bold', textAlign: 'left' }}>
+            ООО ИнтерТентСервис
+          </p>
+          <p className="d-flex" onClick={openMap} style={{ cursor: 'pointer' }}>
             <span className="me-3 d-inline-block">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -86,7 +103,7 @@ export const ContactsPage = () => {
             <thead>
               <tr>
                 <th scope="col" colSpan={2}>
-                  Режим работы:
+                  <h4>Режим работы:</h4>
                 </th>
               </tr>
             </thead>

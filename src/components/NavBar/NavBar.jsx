@@ -5,6 +5,21 @@ import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from 'react-router-dom';
 
 function NavBar() {
+  const openMap = () => {
+    const address = 'улица Бабушкина, 27к5, Минск';
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    let mapUrl;
+
+    if (isMobile) {
+      mapUrl = 'geo:0,0?q=' + encodeURIComponent(address);
+    } else {
+      // mapUrl = 'https://maps.app.goo.gl/113Z2dYA7ynDJSeDA'; // google
+      mapUrl = 'https://yandex.by/maps/-/CDeMB055'; // yandex
+    }
+
+    window.open(mapUrl);
+  };
+
   return (
     <Navbar
       sticky="top"
@@ -15,7 +30,11 @@ function NavBar() {
       <Container className="flex-wrap">
         <div className="row w-100">
           <div className="col-12 col-md-4 p-2">
-            <div className="d-flex">
+            <div
+              className="d-flex"
+              onClick={openMap}
+              style={{ cursor: 'pointer' }}
+            >
               <span className="me-3 d-inline-block">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
