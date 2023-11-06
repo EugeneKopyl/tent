@@ -1,13 +1,20 @@
 @import '~bootstrap/scss/bootstrap';
+@import './bootstrap-override.scss';
 
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Ubuntu', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #2b2d33;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+a {
+  color: #2b2d33;
+  text-decoration: none;
 }
