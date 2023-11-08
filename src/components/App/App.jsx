@@ -1,6 +1,7 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 import {
   AboutPage,
   ContactsPage,
@@ -22,6 +23,7 @@ function App() {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/contacts" element={<ContactsPage />} />
       </Routes>
+      <Footer></Footer>
     </div>
   );
 }

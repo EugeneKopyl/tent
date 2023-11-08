@@ -102,8 +102,8 @@ function NavBar() {
         <Navbar.Brand as={NavLink} to="/" className="p-0">
           <img
             src={'images/inter_logo.svg'}
-            width="100"
-            height="40"
+            width="170px"
+            height="45px"
             className="d-inline-block align-top"
             alt="Main logo"
           />
@@ -111,22 +111,22 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={NavLink} to="/" eventKey="1">
+            <Nav.Link as={NavLink} to="/">
               Главная
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/services" eventKey="2">
+            <Nav.Link as={NavLink} to="/services">
               Услуги
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/parts" eventKey="3">
+            <Nav.Link as={NavLink} to="/parts">
               Запчасти
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/works" eventKey="4">
+            <Nav.Link as={NavLink} to="/works">
               Наши работы
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/about" eventKey="5">
+            <Nav.Link as={NavLink} to="/about">
               О нас
             </Nav.Link>
-            <Nav.Link as={NavLink} to="/contacts" eventKey="6">
+            <Nav.Link as={NavLink} to="/contacts">
               Контакты
             </Nav.Link>
           </Nav>
