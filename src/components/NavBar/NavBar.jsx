@@ -102,8 +102,8 @@ function NavBar() {
         <Navbar.Brand as={NavLink} to="/" className="p-0">
           <img
             src={'images/inter_logo.svg'}
-            width="100"
-            height="40"
+            width="170px"
+            height="45px"
             className="d-inline-block align-top"
             alt="Main logo"
           />
