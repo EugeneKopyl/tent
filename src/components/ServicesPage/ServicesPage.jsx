@@ -1,5 +1,6 @@
 import React from 'react';
 import { Col, Row, Card } from 'react-bootstrap';
+import { serviceItems } from '../../constants/services';
 
 const SimpleCard = (props) => {
   return (
@@ -24,11 +25,8 @@ const SimpleCard = (props) => {
             src={'images/main_logo.jpg'}
           />
           <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
+            <Card.Title>{props.card.title}</Card.Title>
+            <Card.Text>{props.card.description}</Card.Text>
           </Card.Body>
         </Card>
       </Col>
@@ -38,9 +36,14 @@ const SimpleCard = (props) => {
 
 export const ServicesPage = () => {
   return (
-    <div className="container">
-      <SimpleCard imagePosition="left"></SimpleCard>
-      <SimpleCard imagePosition="right"></SimpleCard>
+    <div className="container my-3">
+      {serviceItems.map((card, index) => (
+        <SimpleCard
+          imagePosition={index % 2 === 0 ? 'left' : 'right'}
+          card={card}
+          key={index}
+        ></SimpleCard>
+      ))}
     </div>
   );
 };
