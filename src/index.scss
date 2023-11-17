@@ -11,6 +11,11 @@ body {
   font-weight: 400;
   height: 100%;
   box-sizing: border-box;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+    font-weight: 300;
+  }
 }
 
 code {

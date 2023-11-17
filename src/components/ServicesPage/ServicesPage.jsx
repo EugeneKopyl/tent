@@ -1,36 +1,21 @@
 import React from 'react';
-import { Col, Row, Card } from 'react-bootstrap';
+import './ServicesPage.scss';
 import { serviceItems } from '../../constants/services';
 
 const SimpleCard = (props) => {
   return (
-    <Row>
-      <Col className="my-3">
-        <Card
-          style={{
-            width: '100%',
-            display: 'flex',
-            flexDirection: 'row',
-            maxHeight: '200px',
-          }}
-        >
-          <Card.Img
-            variant={props.imagePosition || 'top'}
-            style={{
-              order:
-                props.imagePosition === 'top' || props.imagePosition === 'left'
-                  ? '0'
-                  : '1',
-            }}
-            src={'images/main_logo.jpg'}
-          />
-          <Card.Body>
-            <Card.Title>{props.card.title}</Card.Title>
-            <Card.Text>{props.card.description}</Card.Text>
-          </Card.Body>
-        </Card>
-      </Col>
-    </Row>
+    <div className={`card-container ${props.imagePosition}`}>
+      <div className="card-image">
+        <img
+          src={props.card.image || 'images/main_logo.jpg'}
+          alt={props.card.title}
+        />
+      </div>
+      <div className="card-content">
+        <h4>{props.card.title}</h4>
+        <p>{props.card.description}</p>
+      </div>
+    </div>
   );
 };
 
@@ -42,7 +27,7 @@ export const ServicesPage = () => {
           imagePosition={index % 2 === 0 ? 'left' : 'right'}
           card={card}
           key={index}
-        ></SimpleCard>
+        />
       ))}
     </div>
   );
