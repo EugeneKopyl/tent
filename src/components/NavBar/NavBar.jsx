@@ -47,7 +47,7 @@ function NavBar() {
       onToggle={() => setExpanded(!expanded)}
     >
       <Container className="flex-wrap">
-        <div className="row w-100">
+        <div className="row m-0 w-100">
           <div className="col-12 col-md-4 p-2">
             <div
               className="d-flex"
