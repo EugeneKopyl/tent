@@ -21,7 +21,7 @@ const SimpleCard = (props) => {
 
 export const ServicesPage = () => {
   return (
-    <div className="container my-3">
+    <div className="container my-3 pt-4">
       {serviceItems.map((card, index) => (
         <SimpleCard
           imagePosition={index % 2 === 0 ? 'left' : 'right'}

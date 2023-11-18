@@ -65,7 +65,7 @@ export const WorksPage = () => {
   const isLastImage = currentIndex === images.length - 1;
 
   return (
-    <div className="gallery container">
+    <div className="gallery container pt-4">
       <div className="row">
         {images.map((image, index) => (
           <div key={index} className="col-md-4 col-lg-3 my-3">

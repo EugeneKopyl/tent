@@ -10,12 +10,18 @@
 
   & .card-image {
     margin-left: 1.25rem;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
   }
 }
 
 .card-container.left {
   & .card-image {
     margin-right: 1.25rem;
+    @media (max-width: 767px) {
+      margin-right: 0;
+    }
   }
 }
 
@@ -54,7 +60,7 @@
   .card-image,
   .card-content {
     width: 100%;
-    padding: 0.9rem;
     text-align: center;
+    margin-bottom: 0.8rem;
   }
 }
