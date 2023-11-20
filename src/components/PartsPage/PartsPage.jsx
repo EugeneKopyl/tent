@@ -36,13 +36,17 @@ export const PartsPage = () => {
 
   return (
     <div className="container pt-4">
-      <h1>Каталог запчастей</h1>
+      <h1 className="text-center">Каталог запчастей</h1>
+      <p>
+        Перечень запчастей представленный в каталоге может быть не полный,
+        наличие и цены уточняйте по телефону.
+      </p>
       <div className="input-group mb-3">
         <input
           type="text"
           className="form-control"
-          placeholder="Поиск"
-          aria-label="Поиск"
+          placeholder="Введите название запчасти"
+          aria-label="Поиск запчасти"
           aria-describedby="search-icon"
           value={searchText}
           onChange={handleChange}

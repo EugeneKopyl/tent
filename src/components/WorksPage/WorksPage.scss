@@ -31,7 +31,7 @@
 .close-button {
   position: fixed;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-50%) scale(2);
   font-size: 1.5rem;
   color: white;
   background-color: transparent;
@@ -54,4 +54,9 @@
 
 .close-button:hover {
   color: red;
+}
+
+.gallery-image {
+  object-fit: cover;
+  aspect-ratio: 1/1;
 }

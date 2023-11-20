@@ -1,24 +1,14 @@
 import './WorksPage.scss';
 import React, { useState, useEffect } from 'react';
+import { galleryItems } from '../../constants/works';
 
 export const WorksPage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fade, setFade] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const images = [
-    'images/gallery/1.jpg',
-    'images/gallery/2.jpg',
-    'images/gallery/3.jpg',
-    'images/gallery/4.jpg',
-    'images/gallery/5.jpg',
-    'images/gallery/6.jpg',
-    'images/gallery/7.jpg',
-  ];
-
-  const handleClick = (image, index) => {
-    console.log(image);
-    setSelectedImage(image);
+  const handleClick = (item, index) => {
+    setSelectedImage(item);
     setCurrentIndex(index);
     setFade(true);
     setTimeout(() => {
@@ -34,7 +24,7 @@ export const WorksPage = () => {
     if (currentIndex > 0) {
       const updatedIndex = currentIndex - 1;
       setTimeout(() => {
-        setSelectedImage(images[updatedIndex]);
+        setSelectedImage(galleryItems[updatedIndex]);
       }, 250);
       setCurrentIndex(updatedIndex);
       setFade(true);
@@ -42,10 +32,10 @@ export const WorksPage = () => {
   };
 
   const handleNext = () => {
-    if (currentIndex < images.length - 1) {
+    if (currentIndex < galleryItems.length - 1) {
       const updatedIndex = currentIndex + 1;
       setTimeout(() => {
-        setSelectedImage(images[updatedIndex]);
+        setSelectedImage(galleryItems[updatedIndex]);
       }, 250);
       setCurrentIndex(updatedIndex);
       setFade(true);
@@ -62,59 +52,67 @@ export const WorksPage = () => {
   }, [fade]);
 
   const isFirstImage = currentIndex === 0;
-  const isLastImage = currentIndex === images.length - 1;
+  const isLastImage = currentIndex === galleryItems.length - 1;
 
   return (
-    <div className="gallery container pt-4">
+    <section className="gallery container pt-4">
       <div className="row">
-        {images.map((image, index) => (
+        {galleryItems.map((item, index) => (
           <div key={index} className="col-md-4 col-lg-3 my-3">
-            <div className="gallery-item-container">
-              <img
-                src={image}
-                alt="img"
-                className="img-fluid"
-                onClick={() => handleClick(image, index)}
-                style={{ objectFit: 'cover', aspectRatio: '1/1' }}
-              ></img>
-            </div>
+            <article className="gallery-item-container">
+              <figure>
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="img-fluid gallery-image"
+                  onClick={() => handleClick(item, index)}
+                />
+                {/*<figcaption>{item.title}</figcaption>*/}
+              </figure>
+            </article>
           </div>
         ))}
       </div>
 
       {selectedImage && (
-        <div className="overlay">
+        <aside className="overlay">
           <div className="image-container">
-            <img
-              src={selectedImage}
-              alt="img"
-              className={`img-fluid ${fade ? 'fade-out' : ''}`}
-            ></img>
+            <figure>
+              <img
+                src={selectedImage.image}
+                alt={selectedImage.title}
+                className={`img-fluid ${fade ? 'fade-out' : ''}`}
+              />
+              {/*<figcaption>{selectedImage.title}</figcaption>*/}
+            </figure>
             {!isFirstImage && (
               <button
-                className="btn btn-secondary prev-button"
+                className="gallery-button prev-button"
                 onClick={handlePrev}
+                aria-label="Previous image"
               >
-                {'<'}
+                ‹
               </button>
             )}
             {!isLastImage && (
               <button
-                className="btn btn-secondary next-button"
+                className="gallery-button next-button"
                 onClick={handleNext}
+                aria-label="Next image"
               >
-                {'>'}
+                ›
               </button>
             )}
             <button
-              className="btn btn-secondary close-button"
+              className="gallery-button close-button"
               onClick={handleClose}
+              aria-label="Close image view"
             >
-              {'X'}
+              ×
             </button>
           </div>
-        </div>
+        </aside>
       )}
-    </div>
+    </section>
   );
 };

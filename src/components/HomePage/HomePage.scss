@@ -1,0 +1,57 @@
+.home-banner {
+  width: 100%;
+  background-image: url('../../../public/images/banner.jpg');
+  height: 0;
+  padding-bottom: 25%;
+  background-size: cover;
+  background-position: center;
+}
+
+.sidebar {
+  flex: 1;
+  padding: 20px;
+}
+
+.mainContent {
+  flex: 3;
+  padding: 20px;
+}
+.home-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-wrapper {
+  display: flex;
+  margin-top: 20px;
+}
+
+.sidebar {
+  flex: 1;
+  padding: 20px;
+  border-left: 1px solid #ddd;
+}
+
+.sidebar img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+.main-content {
+  flex: 3; /* Контент будет занимать 3 части от доступного пространства */
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .content-wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    border-left: none;
+    border-bottom: 1px solid #ddd;
+  }
+}

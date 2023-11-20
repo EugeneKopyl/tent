@@ -2,33 +2,39 @@ import React from 'react';
 import './ServicesPage.scss';
 import { serviceItems } from '../../constants/services';
 
-const SimpleCard = (props) => {
+const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
   return (
-    <div className={`card-container ${props.imagePosition}`}>
-      <div className="card-image">
+    <article className={`card-container text-center ${imagePosition}`}>
+      <figure className="card-image">
         <img
-          src={props.card.image || 'images/main_logo.jpg'}
-          alt={props.card.title}
+          src={image || 'images/main_logo.jpg'}
+          alt={title}
+          width="100%"
+          height="auto"
         />
-      </div>
+        {/*<figcaption>{title}</figcaption>*/}
+      </figure>
       <div className="card-content">
-        <h4>{props.card.title}</h4>
-        <p>{props.card.description}</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
       </div>
-    </div>
+    </article>
   );
 };
 
 export const ServicesPage = () => {
   return (
-    <div className="container my-3 pt-4">
-      {serviceItems.map((card, index) => (
-        <SimpleCard
-          imagePosition={index % 2 === 0 ? 'left' : 'right'}
-          card={card}
-          key={index}
-        />
-      ))}
-    </div>
+    <main className="container my-3 pt-4">
+      <h1>Наши услуги</h1>
+      <section>
+        {serviceItems.map((card, index) => (
+          <SimpleCard
+            imagePosition={index % 2 === 0 ? 'left' : 'right'}
+            card={card}
+            key={card.id || index}
+          />
+        ))}
+      </section>
+    </main>
   );
 };
