@@ -31,6 +31,11 @@
   border-radius: 0.5rem;
   overflow: hidden;
   border: 1px solid rgba(0, 0, 0, 0.2);
+
+  & img {
+    object-fit: cover;
+    aspect-ratio: 1/1;
+  }
 }
 
 .card-item-title {

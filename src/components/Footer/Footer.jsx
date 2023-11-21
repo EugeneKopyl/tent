@@ -25,13 +25,12 @@ function Footer() {
 
       a.dispatchEvent(clickEvent);
     } else {
-      mapUrl = 'https://yandex.by/maps/-/CDeMB055'; // yandex
+      mapUrl = 'https://yandex.by/maps/-/CDeMB055';
       window.open(mapUrl);
     }
   };
-
   return (
-    <div className="footer pt-4 pb-3 px-0 container-fluid">
+    <footer className="footer pt-4 pb-3 px-0 container-fluid">
       <div className="container px-3 pt-2 d-flex align-items-start flex-row flex-wrap">
         <div className="footer__logo d-flex align-items-start pb-5 pb-xl-0">
           <a href="/" className="me-2 d-block">
@@ -39,15 +38,15 @@ function Footer() {
               className="inter-logo"
               loading="lazy"
               src="/images/inter_logo.svg"
-              width="150px"
-              height="40px"
-              alt="ИнтерТентСервис"
+              width="150"
+              height="40"
+              alt="Логотип ИнтерТентСервис"
             />
           </a>
         </div>
-        <div className="align-items-top d-flex px-sm-2 pt-1 footer__nav-contact-info">
-          <div className="pe-2 contact-margin">
-            <div className="nav-item">
+        <div className="d-flex align-items-start px-sm-2 pt-1 footer__contact-info">
+          <ul className="pe-2 list-unstyled">
+            <li className="nav-item d-flex align-items-center">
               <span className="me-3 d-inline-block">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -64,11 +63,11 @@ function Footer() {
                 </svg>
               </span>
               <span className="nav-item__title">Телефон:</span>
-            </div>
-            <div className="nav-item">
+            </li>
+            <li className="nav-item">
               <span className="nav-item__title hidden-text">Телефон:</span>
-            </div>
-            <div className="nav-item">
+            </li>
+            <li className="nav-item">
               <span className="me-3 d-inline-block">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -83,8 +82,8 @@ function Footer() {
                 </svg>
               </span>
               <span className="nav-item__title">Время работы:</span>
-            </div>
-            <div className="nav-item">
+            </li>
+            <li className="nav-item">
               <span className="me-3 d-inline-block">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -99,31 +98,31 @@ function Footer() {
                 </svg>
               </span>
               <span className="nav-item__title">Адрес:</span>
-            </div>
-          </div>
-          <div className="footer__nav-contact-info__data">
-            <div className="nav-item">
+            </li>
+          </ul>
+          <ul className="list-unstyled">
+            <li className="nav-item">
               <a href="tel:+375293761761" className="col-12">
                 +375 (29) 376-17-61
               </a>
-            </div>
-            <div className="nav-item">
+            </li>
+            <li className="nav-item">
               <a href="tel:+375447171617" className="nav-item col-12">
                 +375 (44) 717-16-17
               </a>
-            </div>
-            <div className="nav-item">по будням 08:30 – 17:30</div>
-            <div
+            </li>
+            <li className="nav-item">по будням 08:30 – 17:30</li>
+            <li
               className="nav-item"
               onClick={openMap}
               style={{ cursor: 'pointer' }}
             >
               <address className="m-0">улица Бабушкина, 27к5, Минск</address>
-            </div>
-          </div>
+            </li>
+          </ul>
         </div>
-        <Nav className="me-auto footer__nav d-flex flex-fill justify">
-          <ul className="px-sm-2 pb-xl-5 list-unstyled">
+        <nav className="footer__nav me-auto d-flex flex-fill">
+          <ul className="px-sm-2 list-unstyled">
             {navItems.map((link, index) => (
               <li key={index}>
                 <Nav.Link as={NavLink} to={link.url} className="nav-item">
@@ -132,8 +131,8 @@ function Footer() {
               </li>
             ))}
           </ul>
-        </Nav>
-        <div className="px-sm-2 footer__nav-social-info">
+        </nav>
+        <div className="footer__social-info px-sm-2">
           <div className="nav-item">Подпишитесь на нас:</div>
           <div className="float-start">
             <a
@@ -181,7 +180,7 @@ function Footer() {
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   );
 }
 
