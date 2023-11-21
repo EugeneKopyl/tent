@@ -50,7 +50,7 @@ function NavBar() {
         <div className="row m-0 w-100">
           <div className="col-12 col-md-4 p-2">
             <button
-              className="d-flex"
+              className="d-flex p-0"
               onClick={openMap}
               style={{ cursor: 'pointer', background: 'none', border: 'none' }}
               aria-label="Открыть карту"

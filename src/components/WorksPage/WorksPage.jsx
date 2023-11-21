@@ -104,7 +104,7 @@ export const WorksPage = () => {
               </button>
             )}
             <button
-              className="gallery-button close-button"
+              className="close-button"
               onClick={handleClose}
               aria-label="Close image view"
             >

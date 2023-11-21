@@ -33,7 +33,7 @@
   border: 1px solid rgba(0, 0, 0, 0.2);
 
   & img {
-    object-fit: cover;
+    object-fit: contain;
     aspect-ratio: 1/1;
   }
 }
