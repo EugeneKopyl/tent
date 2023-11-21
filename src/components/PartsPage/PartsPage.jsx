@@ -5,7 +5,7 @@ import { partsItems } from '../../constants/parts';
 
 const PartsCard = ({ item }) => {
   return (
-    <article className="col-md-4 col-lg-3 my-3">
+    <article className="col-6 col-md-4 col-lg-3 my-3">
       <div className="card-item-container">
         <img
           src={item.image}

@@ -16,8 +16,8 @@
 }
 
 .image-container img {
-  max-width: 80%;
-  max-height: 80vh;
+  max-width: 100%;
+  max-height: 90vh;
   opacity: 1;
   transition: opacity 0.25s ease;
 }
@@ -57,6 +57,15 @@
 }
 
 .gallery-image {
+  width: 100%;
   object-fit: cover;
   aspect-ratio: 1/1;
+}
+
+.gallery-button {
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.3);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 }
