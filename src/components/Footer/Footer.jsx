@@ -136,6 +136,7 @@ function Footer() {
           <div className="nav-item">Подпишитесь на нас:</div>
           <div className="float-start">
             <a
+              aria-label="наш инстаграм"
               href="https://www.instagram.com/tentminsk"
               className="nav-item__social-link align-items-center justify-content-center me-2"
             >
@@ -161,6 +162,7 @@ function Footer() {
               </svg>
             </a>
             <a
+              aria-label="наш телеграм"
               href="https://t.me/TENTMINSKOLYADICHI"
               className="nav-item__social-link align-items-center justify-content-center me-2"
             >
