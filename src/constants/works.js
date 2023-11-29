@@ -1,14 +1,6 @@
 export const galleryItems = [
   {
     title: 'Изготовление и ремонт тентов',
-    image: 'images/gallery/1.jpg',
-  },
-  {
-    title: 'Изготовление и ремонт тентов',
-    image: 'images/gallery/2.jpg',
-  },
-  {
-    title: 'Изготовление и ремонт тентов',
     image: 'images/gallery/3.jpg',
   },
   {
