@@ -2,39 +2,40 @@
 @import './bootstrap-override.scss';
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Ubuntu', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2b2d33;
-  font-size: 18px;
-  font-weight: 400;
-  height: 100%;
-  box-sizing: border-box;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Roboto', 'Ubuntu',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2b2d33;
+    font-size: 18px;
+    font-weight: 400;
+    height: 100%;
+    box-sizing: border-box;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-    font-weight: 300;
-  }
+    @media (max-width: 1024px) {
+        font-size: 16px;
+        font-weight: 300;
+    }
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
 }
 
 a {
-  color: #2b2d33;
-  text-decoration: none;
+    color: #2b2d33;
+    text-decoration: none;
 }
 
 .visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  padding: 0;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
 }

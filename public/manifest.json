@@ -1,12 +1,12 @@
 {
-  "name": "tentminsk.by",
-  "short_name": "Тенты Минск",
-  "description": "Тенты Минск - Изготовление и Ремонт Тентов для Автомобилей и Прицепов",
-  "start_url": "index.html?source=pwa",
-  "background_color": "#ffffff",
-  "display": "standalone",
-  "scope": "/",
-  "orientation": "portrait",
-  "theme_color": "#000000",
-  "lang": "ru"
+    "name": "tentminsk.by",
+    "short_name": "Тенты Минск",
+    "description": "Тенты Минск - Изготовление и Ремонт Тентов для Автомобилей и Прицепов",
+    "start_url": "index.html]",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "scope": "/",
+    "orientation": "portrait",
+    "theme_color": "#000000",
+    "lang": "ru"
 }
