@@ -18,17 +18,28 @@ export default function ContactsPage() {
     };
 
     return (
-        <section className="container py-4">
+        <section
+            className="container py-4"
+            itemscope
+            itemtype="https://schema.org/AutoRepair"
+        >
             <header className="row visually-hidden">
                 <div className="col-sm-12 text-center">
                     <h1 className="py-1">Контакты:</h1>
                 </div>
             </header>
             <section className="row">
-                <div className="col-sm-6 p-3">
+                <div
+                    className="col-sm-6 p-3"
+                    itemprop="address"
+                    itemscope
+                    itemtype="https://schema.org/PostalAddress"
+                >
                     <h2>Как нас найти</h2>
                     <address onClick={openMap} style={{ cursor: 'pointer' }}>
-                        <strong>ООО &quot;ИнтерТентСервис&quot;</strong>
+                        <strong itemprop="name">
+                            ООО &quot;ИнтерТентСервис&quot;
+                        </strong>
                         <br />
                         <br />
                         <span className="me-3 d-inline-block">
@@ -44,7 +55,11 @@ export default function ContactsPage() {
                                 <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg>
                         </span>
-                        улица Бабушкина, 27к5, Минск
+                        <span itemprop="streetAddress">
+                            улица Бабушкина, 27к5
+                        </span>
+                        {', '}
+                        <span itemprop="addressLocality">Минск</span>
                     </address>
                     <div>
                         <a href="tel:+375293761761">
@@ -60,7 +75,9 @@ export default function ContactsPage() {
                                     <path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                 </svg>
                             </span>
-                            +375 (29) 376-17-61
+                            <span itemprop="telephone">
+                                +375 (29) 376-17-61
+                            </span>
                         </a>
                         <br />
                         <br />
@@ -77,11 +94,16 @@ export default function ContactsPage() {
                                     <path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                 </svg>
                             </span>
-                            +375 (44) 717-16-17
+                            <span itemprop="telephone">
+                                +375 (44) 717-16-17
+                            </span>
                         </a>
                         <br />
                         <br />
-                        <a href="mailto:intertentservice@gmail.com">
+                        <a
+                            href="mailto:intertentservice@gmail.com"
+                            itemprop="email"
+                        >
                             <span className="me-3 d-inline-block">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -100,42 +122,175 @@ export default function ContactsPage() {
                 </div>
                 <div className="col-sm-6 p-3">
                     <h2>Режим работы</h2>
-                    <table className="table table-sm">
+                    <table
+                        className="table table-sm"
+                        itemprop="openingHoursSpecification"
+                        itemscope
+                        itemtype="https://schema.org/OpeningHoursSpecification"
+                    >
                         <tbody>
                             <tr>
-                                <th scope="row">Понедельник</th>
-                                <td>08:30 – 17:30</td>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Monday"
+                                    />
+                                    Понедельник
+                                </th>
+                                <td>
+                                    <time
+                                        datetime="08:30:00"
+                                        itemprop="opens"
+                                        content="08:30"
+                                    >
+                                        08:30
+                                    </time>
+                                    {' – '}
+                                    <time
+                                        datetime="17:30:00"
+                                        itemprop="closes"
+                                        content="17:30"
+                                    >
+                                        17:30
+                                    </time>
+                                </td>
                             </tr>
                             <tr>
-                                <th scope="row">Вторник</th>
-                                <td>08:30 – 17:30</td>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Tuesday"
+                                    />
+                                    Вторник
+                                </th>
+                                <td>
+                                    <time
+                                        datetime="08:30:00"
+                                        itemprop="opens"
+                                        content="08:30"
+                                    >
+                                        08:30
+                                    </time>
+                                    {' – '}
+                                    <time
+                                        datetime="17:30:00"
+                                        itemprop="closes"
+                                        content="17:30"
+                                    >
+                                        17:30
+                                    </time>
+                                </td>
                             </tr>
                             <tr>
-                                <th scope="row">Среда</th>
-                                <td>08:30 – 17:30</td>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Wednesday"
+                                    />
+                                    Среда
+                                </th>
+                                <td>
+                                    <time
+                                        datetime="08:30:00"
+                                        itemprop="opens"
+                                        content="08:30"
+                                    >
+                                        08:30
+                                    </time>
+                                    {' – '}
+                                    <time
+                                        datetime="17:30:00"
+                                        itemprop="closes"
+                                        content="17:30"
+                                    >
+                                        17:30
+                                    </time>
+                                </td>
                             </tr>
                             <tr>
-                                <th scope="row">Четверг</th>
-                                <td>08:30 – 17:30</td>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Thursday"
+                                    />
+                                    Четверг
+                                </th>
+                                <td>
+                                    <time
+                                        datetime="08:30:00"
+                                        itemprop="opens"
+                                        content="08:30"
+                                    >
+                                        08:30
+                                    </time>
+                                    {' – '}
+                                    <time
+                                        datetime="17:30:00"
+                                        itemprop="closes"
+                                        content="17:30"
+                                    >
+                                        17:30
+                                    </time>
+                                </td>
                             </tr>
                             <tr>
-                                <th scope="row">Пятница</th>
-                                <td>08:30 – 17:30</td>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Friday"
+                                    />
+                                    Пятница
+                                </th>
+                                <td>
+                                    <time
+                                        datetime="08:30:00"
+                                        itemprop="opens"
+                                        content="08:30"
+                                    >
+                                        08:30
+                                    </time>
+                                    {' – '}
+                                    <time
+                                        datetime="17:30:00"
+                                        itemprop="closes"
+                                        content="17:30"
+                                    >
+                                        17:30
+                                    </time>
+                                </td>
                             </tr>
                             <tr className="table-danger">
-                                <th scope="row">Суббота</th>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Saturday"
+                                    />
+                                    Суббота
+                                </th>
                                 <td>Выходной</td>
                             </tr>
                             <tr className="table-danger">
-                                <th scope="row">Воскресенье</th>
+                                <th scope="row" itemprop="name">
+                                    <link
+                                        itemprop="dayOfWeek"
+                                        href="https://schema.org/Sunday"
+                                    />
+                                    Воскресенье
+                                </th>
                                 <td>Выходной</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </section>
-            <section>
+            <section
+                itemprop="geo"
+                itemscope
+                itemtype="https://schema.org/GeoCoordinates"
+            >
                 <h2>Мы на карте:</h2>
+                <meta itemprop="latitude" content="53.808243" />
+                <meta itemprop="longitude" content="27.591853" />
                 <div className={styles.mapContainer}>
                     <a
                         href="https://yandex.com/maps/org/remont_tentov_i_karkasov/221655374096/?utm_medium=mapframe&utm_source=maps"
