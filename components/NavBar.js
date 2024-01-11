@@ -52,13 +52,13 @@ export default function NavBar() {
             <Container className="flex-wrap">
                 <div
                     className="row m-0 w-100"
-                    itemscope
+                    itemscope=""
                     itemtype="https://schema.org/AutoRepair"
                 >
                     <div
                         className="col-12 col-md-4 p-2"
                         itemprop="address"
-                        itemscope
+                        itemscope=""
                         itemtype="https://schema.org/PostalAddress"
                     >
                         <button
