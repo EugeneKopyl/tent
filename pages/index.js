@@ -7,7 +7,7 @@ export default function Index() {
     return (
         <div
             className={styles.homePage}
-            itemscope
+            itemscope=""
             itemtype="https://schema.org/ImageObject"
         >
             <Image

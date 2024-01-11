@@ -20,7 +20,7 @@ export default function ContactsPage() {
     return (
         <section
             className="container py-4"
-            itemscope
+            itemscope=""
             itemtype="https://schema.org/AutoRepair"
         >
             <header className="row visually-hidden">
@@ -32,7 +32,7 @@ export default function ContactsPage() {
                 <div
                     className="col-sm-6 p-3"
                     itemprop="address"
-                    itemscope
+                    itemscope=""
                     itemtype="https://schema.org/PostalAddress"
                 >
                     <h2>Как нас найти</h2>
@@ -125,7 +125,7 @@ export default function ContactsPage() {
                     <table
                         className="table table-sm"
                         itemprop="openingHoursSpecification"
-                        itemscope
+                        itemscope=""
                         itemtype="https://schema.org/OpeningHoursSpecification"
                     >
                         <tbody>
@@ -285,7 +285,7 @@ export default function ContactsPage() {
             </section>
             <section
                 itemprop="geo"
-                itemscope
+                itemscope=""
                 itemtype="https://schema.org/GeoCoordinates"
             >
                 <h2>Мы на карте:</h2>
