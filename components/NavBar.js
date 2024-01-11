@@ -85,11 +85,15 @@ export default function NavBar() {
                                         <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                                     </svg>
                                 </span>
-                                <span itemprop="streetAddress">
-                                    улица Бабушкина, 27к5
+                                <span className="d-inline-flex flex-wrap">
+                                    <span itemprop="streetAddress">
+                                        улица Бабушкина, 27к5
+                                    </span>
+                                    <span>,&nbsp;</span>
+                                    <span itemprop="addressLocality">
+                                        Минск
+                                    </span>
                                 </span>
-                                <span>,&nbsp;</span>
-                                <span itemprop="addressLocality">Минск</span>
                             </address>
                         </button>
                     </div>
