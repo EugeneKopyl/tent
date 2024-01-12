@@ -29,9 +29,18 @@ const PartsCard = ({ item }) => {
                         >
                             {item.title}
                         </span>
+                        <meta itemprop="description" content={item.title} />
                     </h3>
                 </div>
             </div>
+            <span
+                itemprop="offers"
+                itemscope=""
+                itemtype="https://schema.org/Offer"
+            >
+                <meta itemprop="priceCurrency" content="BYN" />
+                <meta itemprop="price" content="0" />
+            </span>
         </article>
     );
 };
