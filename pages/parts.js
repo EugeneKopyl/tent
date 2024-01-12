@@ -6,7 +6,11 @@ import Image from 'next/image';
 
 const PartsCard = ({ item }) => {
     return (
-        <article className="col-6 col-md-4 col-lg-3 my-3">
+        <article
+            className="col-6 col-md-4 col-lg-3 my-3"
+            itemscope=""
+            itemtype="https://schema.org/Product"
+        >
             <div className={styles.cardItemContainer}>
                 <Image
                     src={item.image}
@@ -14,10 +18,15 @@ const PartsCard = ({ item }) => {
                     width={300}
                     height={300}
                     className="img-fluid card-img-top"
+                    itemprop="image"
                 />
                 <div className="card-body">
                     <h3 className={'p-2 m-0 ' + styles.cardItemTitle}>
-                        <span className={styles.titleText} title={item.title}>
+                        <span
+                            className={styles.titleText}
+                            title={item.title}
+                            itemprop="name"
+                        >
                             {item.title}
                         </span>
                     </h3>
@@ -39,12 +48,16 @@ export default function PartsPage() {
     );
 
     return (
-        <main className="container pt-4">
-            <header className="text-center">
+        <div
+            className="container pt-4"
+            itemscope=""
+            itemtype="https://schema.org/OfferCatalog"
+        >
+            <header className="text-center" itemprop="name">
                 <h1>Каталог запчастей</h1>
             </header>
             <section aria-label="Поиск запчастей">
-                <p>
+                <p itemprop="description">
                     Перечень запчастей представленный в каталоге может быть не
                     полный, наличие и цены уточняйте по телефону.
                 </p>
@@ -77,12 +90,16 @@ export default function PartsPage() {
                 </div>
             </section>
             <section aria-label="Каталог продукции">
-                <div className="row">
+                <div
+                    className="row"
+                    itemscope=""
+                    itemtype="https://schema.org/OfferCatalog"
+                >
                     {filteredItems.map((item, index) => (
                         <PartsCard key={index} item={item} />
                     ))}
                 </div>
             </section>
-        </main>
+        </div>
     );
 }

@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { navItems } from '@/constants/menu';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -55,6 +55,10 @@ export default function NavBar() {
                     itemscope=""
                     itemtype="https://schema.org/AutoRepair"
                 >
+                    <meta
+                        itemProp="name"
+                        content="Изготовление и ремонт тентов"
+                    />
                     <div
                         className="col-12 col-md-4 p-2"
                         itemprop="address"

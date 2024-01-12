@@ -23,8 +23,14 @@ export default function Layout({ children }) {
                     name="description"
                     content="Тенты Минск - профессиональный ремонт и изготовление тентов для автомобилей, грузовиков и прицепов, а также ремонт и продажа запчастей и каркасов."
                 />
-                <link rel="apple-touch-icon" href="/logo192.png" />
-                <link rel="manifest" href="/manifest.json" />
+                <link
+                    rel="apple-touch-icon"
+                    href="https://tentminsk.by/logo192.png"
+                />
+                <link
+                    rel="manifest"
+                    href="https://tentminsk.by/manifest.json"
+                />
 
                 <meta property="og:type" content="website" />
                 <meta property="og:url" content="https://tentminsk.by/" />
@@ -36,9 +42,17 @@ export default function Layout({ children }) {
                     property="og:description"
                     content="Профессиональные услуги по ремонту и изготовлению тентов для всех типов транспортных средств."
                 />
-                <meta property="og:image" content="/logo512.png" />
+                <meta
+                    property="og:image"
+                    content="https://tentminsk.by/images/banner.jpg"
+                />
+                <meta
+                    property="og:image:alt"
+                    content="Изготовление и Ремонт Тентов"
+                />
 
                 <meta property="twitter:card" content="summary_large_image" />
+                <meta property="twitter:domain" content="tentminsk.by" />
                 <meta property="twitter:url" content="https://tentminsk.by/" />
                 <meta
                     property="twitter:title"
@@ -48,7 +62,10 @@ export default function Layout({ children }) {
                     property="twitter:description"
                     content="Профессиональные услуги по ремонту и изготовлению тентов для всех типов транспортных средств."
                 />
-                <meta property="twitter:image" content="/logo512.png" />
+                <meta
+                    property="twitter:image"
+                    content="https://tentminsk.by/images/banner.jpg"
+                />
             </Head>
             <NextScript />
 
