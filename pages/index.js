@@ -27,14 +27,14 @@ export default function Index() {
                 </p>
 
                 <div className={styles.contentWrapper}>
-                    <main className={styles.mainContent}>
+                    <section className={styles.mainContent}>
                         <p>
                             Наши услуги включают создание и ремонт тентов для
                             автомобилей и прицепов, работу с каркасами и
                             сдвижными крышами, а также продажу запчастей и
                             ремонт ворот для прицепов.
                         </p>
-                    </main>
+                    </section>
                     <div className={styles.sidebar}>
                         <RandomImageGallery />
                     </div>

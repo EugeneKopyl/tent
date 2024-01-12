@@ -38,7 +38,7 @@ const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
 
 export default function ServicesPage() {
     return (
-        <main
+        <div
             className="container my-3 pt-4"
             itemscope=""
             itemtype="https://schema.org/Service"
@@ -58,6 +58,6 @@ export default function ServicesPage() {
                     />
                 ))}
             </section>
-        </main>
+        </div>
     );
 }

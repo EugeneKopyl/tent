@@ -23,6 +23,7 @@ export default function ContactsPage() {
             itemscope=""
             itemtype="https://schema.org/AutoRepair"
         >
+            <meta itemprop="name" content="Изготовление и ремонт тентов" />
             <header className="row visually-hidden">
                 <div className="col-sm-12 text-center">
                     <h1 className="py-1">Контакты:</h1>
