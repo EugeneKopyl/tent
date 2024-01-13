@@ -1,10 +1,20 @@
-// import './AboutPage.scss';
-// import React from 'react';
+import React from 'react';
+import Head from 'next/head';
 import styles from '../styles/about.module.scss';
 
 export default function About() {
     return (
         <div className="container pt-4">
+            <Head>
+                <title>
+                    ИнтерТентСервис - О нас - Изготовление и Ремонт Тентов для
+                    Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="ИнтерТентСервис - Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения."
+                />
+            </Head>
             <header className="text-center">
                 <h1 className={styles.header}>О нас</h1>
             </header>
