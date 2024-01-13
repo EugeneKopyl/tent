@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
 import styles from '../styles/works.module.scss';
 import { galleryItems } from '@/constants/works';
-import Image from 'next/image';
 
 export default function WorksPage() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -57,6 +58,19 @@ export default function WorksPage() {
 
     return (
         <section className="container pt-4">
+            <Head>
+                <title>
+                    ИнтерТентСервис - Галерея - Изготовление и Ремонт Тентов для
+                    Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="Тенты Минск - ИнтерТентСервис - В данном разделе можно ознакомится с примерами наших работ."
+                />
+            </Head>
+            <header className="text-center">
+                <h1>Примеры наших робот</h1>
+            </header>
             <div className="row">
                 {galleryItems.map((item, index) => (
                     <div key={index} className="col-md-4 col-lg-3 my-3">

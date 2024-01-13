@@ -1,4 +1,5 @@
 import React from 'react';
+import Head from 'next/head';
 import styles from '../styles/contacts.module.scss';
 
 export default function ContactsPage() {
@@ -23,6 +24,16 @@ export default function ContactsPage() {
             itemscope=""
             itemtype="https://schema.org/AutoRepair"
         >
+            <Head>
+                <title>
+                    ИнтерТентСервис - Контакты - Изготовление и Ремонт Тентов
+                    для Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="Тенты Минск - ИнтерТентСервис - Мы находимся: г.Минск, улица Бабушкина, 27к5. Консультация и наличие запчастей: +375 (29) 376-17-61."
+                />
+            </Head>
             <meta itemprop="name" content="Изготовление и ремонт тентов" />
             <header className="row visually-hidden">
                 <div className="col-sm-12 text-center">

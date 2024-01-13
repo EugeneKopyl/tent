@@ -1,7 +1,8 @@
 import React from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
 import styles from '../styles/services.module.scss';
 import { serviceItems } from '@/constants/services';
-import Image from 'next/image';
 
 const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
     return (
@@ -10,6 +11,16 @@ const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
             itemscope=""
             itemtype="https://schema.org/Offer"
         >
+            <Head>
+                <title>
+                    ИнтерТентСервис - Услуги - Изготовление и Ремонт Тентов для
+                    Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="ИнтерТентСервис - Профессиональный ремонт и изготовление тентов для автомобилей, грузовиков и прицепов, ремонт каркасов и продажа запчастей."
+                />
+            </Head>
             <article
                 className={`${styles.cardContainer} text-center ${
                     imagePosition === 'right' ? styles.right : styles.left

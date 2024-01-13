@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import Head from 'next/head';
+import Image from 'next/image';
 import styles from '../styles/parts.module.scss';
 import { partsItems } from '@/constants/parts';
-import Image from 'next/image';
 
 const PartsCard = ({ item }) => {
     return (
@@ -32,15 +32,21 @@ const PartsCard = ({ item }) => {
                         <meta itemprop="description" content={item.title} />
                     </h3>
                 </div>
+                <span
+                    itemprop="offers"
+                    itemscope=""
+                    itemtype="https://schema.org/Offer"
+                    className={`${styles.textAvailability} p-2`}
+                >
+                    <meta itemprop="priceCurrency" content="BYN" />
+                    <meta itemprop="price" content="0" />
+                    <link
+                        itemprop="availability"
+                        href="https://schema.org/InStock"
+                    />
+                    В наличии
+                </span>
             </div>
-            <span
-                itemprop="offers"
-                itemscope=""
-                itemtype="https://schema.org/Offer"
-            >
-                <meta itemprop="priceCurrency" content="BYN" />
-                <meta itemprop="price" content="0" />
-            </span>
         </article>
     );
 };
@@ -62,6 +68,16 @@ export default function PartsPage() {
             itemscope=""
             itemtype="https://schema.org/OfferCatalog"
         >
+            <Head>
+                <title>
+                    ИнтерТентСервис - Каталог запчастей - Изготовление и Ремонт
+                    Тентов для Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="ИнтерТентСервис - Широкий асортимент запчастей и аксессуаров для автомобилей."
+                />
+            </Head>
             <header className="text-center" itemprop="name">
                 <h1>Каталог запчастей</h1>
             </header>

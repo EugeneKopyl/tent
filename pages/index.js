@@ -1,7 +1,8 @@
-import RandomImageGallery from '../components/RandomImageGallery';
-import styles from '../styles/home.module.scss';
-import Image from 'next/image';
 import React from 'react';
+import Image from 'next/image';
+import Head from 'next/head';
+import styles from '../styles/home.module.scss';
+import RandomImageGallery from '../components/RandomImageGallery';
 
 export default function Index() {
     return (
@@ -10,6 +11,16 @@ export default function Index() {
             itemscope=""
             itemtype="https://schema.org/ImageObject"
         >
+            <Head>
+                <title>
+                    ИнтерТентСервис - Главная - Изготовление и Ремонт Тентов для
+                    Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="ИнтерТентСервис - Профессиональный ремонт и изготовление тентов для автомобилей, грузовиков и прицепов, ремонт каркасов и продажа запчастей."
+                />
+            </Head>
             <Image
                 src="/images/banner.jpg"
                 alt="content image"
