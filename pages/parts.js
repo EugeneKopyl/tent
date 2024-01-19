@@ -38,8 +38,8 @@ const PartsCard = ({ item }) => {
                     itemtype="https://schema.org/Offer"
                     className={`${styles.textAvailability} p-2`}
                 >
-                    <meta itemprop="priceCurrency" content="BYN" />
-                    <meta itemprop="price" content="0" />
+                    <meta itemprop="priceCurrency" content={item.currency} />
+                    <meta itemprop="price" content={item.price} />
                     <link
                         itemprop="availability"
                         href="https://schema.org/InStock"
