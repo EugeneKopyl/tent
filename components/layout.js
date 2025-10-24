@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Layout({ children }) {
     return (
-        <>
+        <div className="d-flex flex-column min-vh-100">
             <Head>
                 <meta charSet="utf-8" />
                 <link rel="icon" href="/favicon.ico" />
@@ -87,8 +87,8 @@ export default function Layout({ children }) {
             </Head>
 
             <NavBar></NavBar>
-            <main>{children}</main>
+            <main className="flex-grow-1">{children}</main>
             <Footer></Footer>
-        </>
+        </div>
     );
 }

@@ -154,7 +154,7 @@ export default function NavBar() {
                 </div>
                 <Link href="/" className="p-0">
                     <Image
-                        src={'images/inter_logo.svg'}
+                        src={'/images/inter_logo.svg'}
                         width={170}
                         height={45}
                         className="d-inline-block align-top"
