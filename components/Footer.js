@@ -125,7 +125,7 @@ export default function Footer() {
                             </Link>
                         </li>
                         <li className={styles.navItem}>
-                            по будням 08:30 – 17:30
+                            ежедневно 08:30 – 20:00
                         </li>
                         <li
                             className={styles.navItem}
