@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/parts.module.scss';
-import { partsItems } from '@/constants/parts';
 
 const PartsCard = ({ item }) => {
     return (
@@ -80,10 +79,6 @@ export default function PartsPage() {
         item.title.toLowerCase().includes(searchText.toLowerCase()),
     );
 
-    if (loading) {
-        return <div>Loading parts...</div>;
-    }
-
     return (
         <div
             className="container pt-4"
@@ -137,15 +132,30 @@ export default function PartsPage() {
                 </div>
             </section>
             <section aria-label="Каталог продукции">
-                <div
-                    className="row"
-                    itemscope=""
-                    itemtype="https://schema.org/OfferCatalog"
-                >
-                    {filteredItems.map((item, index) => (
-                        <PartsCard key={index} item={item} />
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="text-center py-5">
+                        <div className="spinner-border text-dark" role="status">
+                            <span className="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p className="mt-3">Загружаем каталог запчастей...</p>
+                    </div>
+                ) : (
+                    <div
+                        className="row"
+                        itemscope=""
+                        itemtype="https://schema.org/OfferCatalog"
+                    >
+                        {filteredItems.length > 0 ? (
+                            filteredItems.map((item, index) => (
+                                <PartsCard key={index} item={item} />
+                            ))
+                        ) : (
+                            <div className="col-12 text-center py-4">
+                                <p>Запчасти не найдены</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </section>
         </div>
     );
