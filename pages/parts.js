@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/parts.module.scss';
@@ -53,6 +53,24 @@ const PartsCard = ({ item }) => {
 
 export default function PartsPage() {
     const [searchText, setSearchText] = useState('');
+    const [partsItems, setPartsItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchParts = async () => {
+            try {
+                const response = await fetch('/api/parts');
+                const data = await response.json();
+                setPartsItems(data);
+            } catch (error) {
+                console.error('Error fetching parts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchParts();
+    }, []);
 
     const handleChange = (event) => {
         setSearchText(event.target.value);
@@ -61,6 +79,10 @@ export default function PartsPage() {
     const filteredItems = partsItems.filter((item) =>
         item.title.toLowerCase().includes(searchText.toLowerCase()),
     );
+
+    if (loading) {
+        return <div>Loading parts...</div>;
+    }
 
     return (
         <div
