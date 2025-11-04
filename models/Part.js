@@ -18,6 +18,12 @@ const PartSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        description: {
+            type: String,
+        },
+        order: {
+            type: Number,
+        },
     },
     {
         timestamps: true,
