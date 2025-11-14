@@ -185,12 +185,10 @@ export default async function handler(req, res) {
             });
         } catch (e) {
             console.error('Upload restore error:', e);
-            return res
-                .status(500)
-                .json({
-                    message: 'Restore from file failed',
-                    error: e.message,
-                });
+            return res.status(500).json({
+                message: 'Restore from file failed',
+                error: e.message,
+            });
         }
     } else {
         return res.status(400).json({ message: 'Unknown action' });
