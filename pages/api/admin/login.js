@@ -1,11 +1,7 @@
 import connectDB from '../../../lib/mongodb';
 import User from '../../../models/User';
-import { generateToken, verifyToken } from '../../../lib/auth';
-import {
-    checkRateLimit,
-    getClientIP,
-    resetRateLimit,
-} from '../../../lib/rateLimiter';
+import { generateToken } from '@/lib/auth';
+import { checkRateLimit, getClientIP, resetRateLimit } from '@/lib/rateLimiter';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
@@ -42,27 +38,6 @@ export default async function handler(req, res) {
                 .json({ message: 'Username and password are required' });
         }
 
-        const adminUsername = process.env.ADMIN_USERNAME || 'admin';
-        const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
-
-        if (username === adminUsername && password === adminPassword) {
-            // Сбрасываем rate limit при успешном входе
-            resetRateLimit(clientIP);
-
-            const token = generateToken('admin');
-
-            res.setHeader(
-                'Set-Cookie',
-                `adminToken=${token}; HttpOnly; Path=/; Max-Age=86400`,
-            );
-
-            return res.status(200).json({
-                success: true,
-                message: 'Login successful',
-                token,
-            });
-        }
-
         const user = await User.findOne({ username, isActive: true });
 
         if (!user) {
@@ -77,6 +52,14 @@ export default async function handler(req, res) {
         if (!isPasswordValid) {
             return res.status(401).json({
                 message: 'Invalid credentials',
+                remainingAttempts: rateLimit.remaining,
+            });
+        }
+
+        // Проверяем, что пользователь имеет роль admin или superadmin
+        if (user.role !== 'admin' && user.role !== 'superadmin') {
+            return res.status(403).json({
+                message: 'Access denied. Admin role required.',
                 remainingAttempts: rateLimit.remaining,
             });
         }

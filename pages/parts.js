@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/parts.module.scss';
+import { partsItems as defaultPartsItems } from '../constants/parts';
 
 const PartsCard = ({ item }) => {
     return (
@@ -59,10 +60,20 @@ export default function PartsPage() {
         const fetchParts = async () => {
             try {
                 const response = await fetch('/api/parts');
+                if (!response.ok) {
+                    console.error('Failed to fetch parts');
+                }
                 const data = await response.json();
-                setPartsItems(data);
+                // Если данные получены и не пустые, используем их, иначе используем локальную переменную
+                if (data && Array.isArray(data) && data.length > 0) {
+                    setPartsItems(data);
+                } else {
+                    setPartsItems(defaultPartsItems);
+                }
             } catch (error) {
                 console.error('Error fetching parts:', error);
+                // При ошибке используем локальную переменную
+                setPartsItems(defaultPartsItems);
             } finally {
                 setLoading(false);
             }
