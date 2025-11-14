@@ -16,6 +16,7 @@ function AdminPartsTab({ userRole }) {
     });
     const [backupMsg, setBackupMsg] = useState('');
     const [backupLoading, setBackupLoading] = useState(false);
+    const [restoreFile, setRestoreFile] = useState(null);
 
     useEffect(() => {
         fetchParts();
@@ -31,7 +32,7 @@ function AdminPartsTab({ userRole }) {
             const data = await res.json();
             setBackupMsg(
                 res.ok
-                    ? `Бэкап успешно (${data.count})`
+                    ? `Бэкап успешно (${data.count} записей)`
                     : `Ошибка: ${data.message}`,
             );
         } catch (e) {
@@ -39,7 +40,15 @@ function AdminPartsTab({ userRole }) {
         }
         setBackupLoading(false);
     };
+
     const doRestore = async () => {
+        if (
+            !window.confirm(
+                'Восстановить данные из последнего бэкапа? Все текущие данные будут удалены.',
+            )
+        ) {
+            return;
+        }
         setBackupLoading(true);
         setBackupMsg('');
         try {
@@ -49,10 +58,112 @@ function AdminPartsTab({ userRole }) {
             const data = await res.json();
             setBackupMsg(
                 res.ok
-                    ? `Восстановление успешно (${data.count})`
+                    ? `Восстановление успешно (${data.count} записей)`
                     : `Ошибка: ${data.message}`,
             );
             if (res.ok) fetchParts();
+        } catch (e) {
+            setBackupMsg('Ошибка сети');
+        }
+        setBackupLoading(false);
+    };
+
+    const doDownload = async () => {
+        setBackupLoading(true);
+        setBackupMsg('');
+        try {
+            const res = await fetch('/api/parts-backup?action=download', {
+                method: 'POST',
+            });
+            if (!res.ok) {
+                const data = await res.json();
+                setBackupMsg(`Ошибка: ${data.message}`);
+                setBackupLoading(false);
+                return;
+            }
+            const data = await res.json();
+            const blob = new Blob([JSON.stringify(data, null, 2)], {
+                type: 'application/json',
+            });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            a.href = url;
+            a.download = `parts-backup-${timestamp}.json`;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            document.body.removeChild(a);
+            setBackupMsg(`Файл скачан (${data.length} записей)`);
+        } catch (e) {
+            setBackupMsg('Ошибка сети');
+        }
+        setBackupLoading(false);
+    };
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        if (!file.name.endsWith('.json')) {
+            setBackupMsg('Ошибка: выберите JSON файл');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+            try {
+                const data = JSON.parse(event.target.result);
+                if (!Array.isArray(data)) {
+                    setBackupMsg('Ошибка: неверный формат файла');
+                    return;
+                }
+                setRestoreFile(data);
+                setBackupMsg(
+                    `Файл загружен (${data.length} записей). Нажмите "Восстановить из файла" для применения.`,
+                );
+            } catch (e) {
+                setBackupMsg('Ошибка: не удалось прочитать файл');
+            }
+        };
+        reader.readAsText(file);
+    };
+
+    const doRestoreFromFile = async () => {
+        if (!restoreFile) {
+            setBackupMsg('Ошибка: сначала загрузите файл');
+            return;
+        }
+
+        if (
+            !window.confirm(
+                `Восстановить данные из файла? Будет восстановлено ${restoreFile.length} записей. Все текущие данные будут удалены.`,
+            )
+        ) {
+            return;
+        }
+
+        setBackupLoading(true);
+        setBackupMsg('');
+        try {
+            const res = await fetch('/api/parts-backup?action=upload', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(restoreFile),
+            });
+            const data = await res.json();
+            setBackupMsg(
+                res.ok
+                    ? `Восстановление из файла успешно (${data.count} записей)`
+                    : `Ошибка: ${data.message}`,
+            );
+            if (res.ok) {
+                fetchParts();
+                setRestoreFile(null);
+                // Очищаем input
+                const fileInput = document.getElementById('backup-file-input');
+                if (fileInput) fileInput.value = '';
+            }
         } catch (e) {
             setBackupMsg('Ошибка сети');
         }
@@ -204,14 +315,84 @@ function AdminPartsTab({ userRole }) {
     return (
         <div>
             {userRole === 'superadmin' && (
-                <div style={{ marginBottom: 16 }}>
-                    <button onClick={doBackup} disabled={backupLoading}>
-                        Бэкап
-                    </button>{' '}
-                    <button onClick={doRestore} disabled={backupLoading}>
-                        Восстановить
-                    </button>{' '}
-                    {backupMsg && <span>{backupMsg}</span>}
+                <div
+                    style={{
+                        marginBottom: 16,
+                        padding: '12px',
+                        backgroundColor: '#f8f9fa',
+                        borderRadius: '4px',
+                    }}
+                >
+                    <div style={{ marginBottom: '8px' }}>
+                        <strong>Бэкап запчастей:</strong>
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '8px',
+                            alignItems: 'center',
+                            marginBottom: '8px',
+                        }}
+                    >
+                        <button
+                            className="btn btn-primary btn-sm"
+                            onClick={doBackup}
+                            disabled={backupLoading}
+                        >
+                            Создать бэкап
+                        </button>
+                        <button
+                            className="btn btn-success btn-sm"
+                            onClick={doDownload}
+                            disabled={backupLoading}
+                        >
+                            Скачать бэкап
+                        </button>
+                        <button
+                            className="btn btn-warning btn-sm"
+                            onClick={doRestore}
+                            disabled={backupLoading}
+                        >
+                            Восстановить из последнего
+                        </button>
+                    </div>
+                    <div
+                        style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '8px',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <input
+                            id="backup-file-input"
+                            type="file"
+                            accept=".json"
+                            onChange={handleFileUpload}
+                            disabled={backupLoading}
+                            style={{ fontSize: '12px' }}
+                        />
+                        <button
+                            className="btn btn-info btn-sm"
+                            onClick={doRestoreFromFile}
+                            disabled={backupLoading || !restoreFile}
+                        >
+                            Восстановить из файла
+                        </button>
+                    </div>
+                    {backupMsg && (
+                        <div
+                            style={{
+                                marginTop: '8px',
+                                color: backupMsg.includes('Ошибка')
+                                    ? '#dc3545'
+                                    : '#28a745',
+                            }}
+                        >
+                            {backupMsg}
+                        </div>
+                    )}
                 </div>
             )}
             <div className="mb-3 text-end">
