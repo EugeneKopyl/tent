@@ -169,7 +169,7 @@ function AdminInfoTab({ users, error, formatDate, loading, userRole }) {
                                 {error}
                             </div>
                         )}
-                        {users.length === 0 ? (
+                        {users?.length === 0 ? (
                             <div className="text-center py-5">
                                 <p className="text-muted">
                                     No users found in the database.
