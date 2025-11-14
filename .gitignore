@@ -38,3 +38,7 @@ next-env.d.ts
 
 # others
 .idea
+
+# backups
+/backups
+*.json.backup

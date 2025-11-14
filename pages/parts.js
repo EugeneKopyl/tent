@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Image from 'next/image';
 import styles from '../styles/parts.module.scss';
-import { partsItems } from '@/constants/parts';
 
 const PartsCard = ({ item }) => {
     return (
@@ -53,6 +52,24 @@ const PartsCard = ({ item }) => {
 
 export default function PartsPage() {
     const [searchText, setSearchText] = useState('');
+    const [partsItems, setPartsItems] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchParts = async () => {
+            try {
+                const response = await fetch('/api/parts');
+                const data = await response.json();
+                setPartsItems(data);
+            } catch (error) {
+                console.error('Error fetching parts:', error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchParts();
+    }, []);
 
     const handleChange = (event) => {
         setSearchText(event.target.value);
@@ -115,15 +132,30 @@ export default function PartsPage() {
                 </div>
             </section>
             <section aria-label="Каталог продукции">
-                <div
-                    className="row"
-                    itemscope=""
-                    itemtype="https://schema.org/OfferCatalog"
-                >
-                    {filteredItems.map((item, index) => (
-                        <PartsCard key={index} item={item} />
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="text-center py-5">
+                        <div className="spinner-border text-dark" role="status">
+                            <span className="visually-hidden">Загрузка...</span>
+                        </div>
+                        <p className="mt-3">Загружаем каталог запчастей...</p>
+                    </div>
+                ) : (
+                    <div
+                        className="row"
+                        itemscope=""
+                        itemtype="https://schema.org/OfferCatalog"
+                    >
+                        {filteredItems.length > 0 ? (
+                            filteredItems.map((item, index) => (
+                                <PartsCard key={index} item={item} />
+                            ))
+                        ) : (
+                            <div className="col-12 text-center py-4">
+                                <p>Запчасти не найдены</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </section>
         </div>
     );

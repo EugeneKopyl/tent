@@ -333,8 +333,8 @@ export default function ContactsPage() {
                 itemtype="https://schema.org/GeoCoordinates"
             >
                 <h2>Мы на карте:</h2>
-                <meta itemprop="latitude" content="53.808243"/>
-                <meta itemprop="longitude" content="27.591853"/>
+                <meta itemprop="latitude" content="53.808243" />
+                <meta itemprop="longitude" content="27.591853" />
                 <div className={styles.mapContainer}>
                     <a
                         href="https://yandex.com/maps/org/remont_tentov_i_karkasov/221655374096/?utm_medium=mapframe&utm_source=maps"
