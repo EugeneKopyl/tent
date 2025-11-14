@@ -1,0 +1,30 @@
+{
+    "name": "tent",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "prettier": "prettier . --write"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.2",
+        "bootstrap": "^5.3.8",
+        "jsonwebtoken": "^9.0.2",
+        "mongodb": "^6.20.0",
+        "mongoose": "^8.19.2",
+        "next": "16.0.0",
+        "react": "^19.2.0",
+        "react-bootstrap": "^2.10.10",
+        "react-dom": "^19.2.0",
+        "react-router-dom": "^7.9.4",
+        "sass": "^1.93.2"
+    },
+    "devDependencies": {
+        "eslint": "^9.38.0",
+        "eslint-config-next": "^16.0.0",
+        "prettier": "^3.6.2"
+    }
+}
