@@ -1,6 +1,6 @@
-import { verifyToken, getTokenFromRequest } from '../../../lib/auth';
+import { verifyToken, getTokenFromRequest } from '@/lib/auth';
 
-export default function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
     }
@@ -18,9 +18,27 @@ export default function handler(req, res) {
             return res.status(401).json({ message: 'Invalid token' });
         }
 
+        let role = 'admin';
+        let user = null;
+        if (
+            decoded.userId &&
+            typeof decoded.userId === 'string' &&
+            decoded.userId.length > 8
+        ) {
+            const mongoose = require('mongoose');
+            const User = mongoose.models.User || mongoose.model('User');
+            const dbConnectImported = require('../../../lib/mongodb');
+            const dbConnect = dbConnectImported.default || dbConnectImported;
+            await dbConnect();
+            user = await User.findById(decoded.userId).select('role');
+            role = user?.role || 'admin';
+        } else if (decoded.userId === 'superadmin') {
+            role = 'superadmin';
+        }
         res.status(200).json({
             success: true,
             message: 'Token is valid',
+            role,
         });
     } catch (error) {
         console.error('Verify token error:', error);

@@ -42,49 +42,41 @@ export default async function handler(req, res) {
                 .json({ message: 'Access denied. Superadmin only.' });
         }
 
-        const { username, email, password, firstName, lastName } = req.body;
+        const { userId, newPassword } = req.body;
 
-        if (!username || !email || !password || !firstName || !lastName) {
-            return res.status(400).json({
-                message:
-                    'All fields are required: username, email, password, firstName, lastName',
-            });
+        if (!userId || !newPassword) {
+            return res
+                .status(400)
+                .json({ message: 'User ID and new password are required' });
         }
 
-        if (password.length < 6) {
+        if (newPassword.length < 6) {
             return res.status(400).json({
                 message: 'Password must be at least 6 characters long',
             });
         }
 
-        const existingUser = await User.findOne({
-            $or: [{ username }, { email }],
-        });
+        const userToUpdate = await User.findById(userId);
 
-        if (existingUser) {
-            return res.status(400).json({
-                message: 'User with this username or email already exists',
-            });
+        if (!userToUpdate) {
+            return res.status(404).json({ message: 'User not found' });
         }
 
-        const user = new User({
-            username,
-            email,
-            password,
-            firstName,
-            lastName,
-            role: 'admin',
-        });
+        if (userToUpdate.role === 'superadmin') {
+            return res
+                .status(403)
+                .json({ message: 'Cannot change superadmin password' });
+        }
 
-        await user.save();
+        userToUpdate.password = newPassword;
+        await userToUpdate.save();
 
-        res.status(201).json({
+        res.status(200).json({
             success: true,
-            message: 'Admin account created successfully',
-            user: user.toJSON(),
+            message: 'Password changed successfully',
         });
     } catch (error) {
-        console.error('Admin registration error:', error);
+        console.error('Change password error:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 }
