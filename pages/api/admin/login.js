@@ -1,10 +1,34 @@
 import connectDB from '../../../lib/mongodb';
 import User from '../../../models/User';
 import { generateToken, verifyToken } from '../../../lib/auth';
+import {
+    checkRateLimit,
+    getClientIP,
+    resetRateLimit,
+} from '../../../lib/rateLimiter';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         return res.status(405).json({ message: 'Method not allowed' });
+    }
+
+    // Rate limiting: максимум 5 попыток за 15 минут
+    const clientIP = getClientIP(req);
+    const rateLimit = checkRateLimit(clientIP, 5, 15 * 60 * 1000);
+
+    // Добавляем заголовки rate limit в каждый ответ
+    res.setHeader('X-RateLimit-Limit', '5');
+    res.setHeader('X-RateLimit-Remaining', rateLimit.remaining.toString());
+    res.setHeader('X-RateLimit-Reset', rateLimit.resetTime.toISOString());
+
+    if (!rateLimit.allowed) {
+        const resetTimeSeconds = Math.ceil(
+            (rateLimit.resetTime.getTime() - Date.now()) / 1000,
+        );
+        return res.status(429).json({
+            message: `Слишком много попыток входа. Попробуйте снова через ${Math.ceil(resetTimeSeconds / 60)} минут.`,
+            resetTime: rateLimit.resetTime.toISOString(),
+        });
     }
 
     try {
@@ -22,6 +46,9 @@ export default async function handler(req, res) {
         const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
 
         if (username === adminUsername && password === adminPassword) {
+            // Сбрасываем rate limit при успешном входе
+            resetRateLimit(clientIP);
+
             const token = generateToken('admin');
 
             res.setHeader(
@@ -39,14 +66,23 @@ export default async function handler(req, res) {
         const user = await User.findOne({ username, isActive: true });
 
         if (!user) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({
+                message: 'Invalid credentials',
+                remainingAttempts: rateLimit.remaining,
+            });
         }
 
         const isPasswordValid = await user.comparePassword(password);
 
         if (!isPasswordValid) {
-            return res.status(401).json({ message: 'Invalid credentials' });
+            return res.status(401).json({
+                message: 'Invalid credentials',
+                remainingAttempts: rateLimit.remaining,
+            });
         }
+
+        // Сбрасываем rate limit при успешном входе
+        resetRateLimit(clientIP);
 
         user.lastLogin = new Date();
         await user.save();
