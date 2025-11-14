@@ -197,7 +197,7 @@ function AdminInfoTab({ users, error, formatDate, loading, userRole }) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {users.map((user) => (
+                                        {users?.map((user) => (
                                             <tr key={user._id}>
                                                 <td className="font-monospace small text-muted">
                                                     {user._id.slice(-8)}
