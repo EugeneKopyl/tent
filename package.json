@@ -12,6 +12,7 @@
     "dependencies": {
         "bcryptjs": "^3.0.2",
         "bootstrap": "^5.3.8",
+        "browser-image-compression": "^2.0.2",
         "jsonwebtoken": "^9.0.2",
         "mongodb": "^6.20.0",
         "mongoose": "^8.19.2",
