@@ -52,7 +52,6 @@ function AdminLoginContent() {
             } else {
                 let errorMessage = data.message || 'Login failed';
 
-                // Добавляем информацию об оставшихся попытках
                 if (
                     data.remainingAttempts !== undefined &&
                     data.remainingAttempts >= 0
@@ -60,7 +59,6 @@ function AdminLoginContent() {
                     errorMessage += ` (Осталось попыток: ${data.remainingAttempts})`;
                 }
 
-                // Специальная обработка для rate limit
                 if (response.status === 429) {
                     errorMessage =
                         data.message ||

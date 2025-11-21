@@ -18,8 +18,8 @@ function AdminWorksTab({ userRole }) {
         maxWidthOrHeight: 1920,
         useWebWorker: true,
     });
-    const [showCompressionSettings, setShowCompressionSettings] =
-        useState(false);
+    // const [showCompressionSettings, setShowCompressionSettings] =
+    //     useState(false);
 
     useEffect(() => {
         fetchWorks();

@@ -64,7 +64,6 @@ export default function PartsPage() {
                     console.error('Failed to fetch parts');
                 }
                 const data = await response.json();
-                // Если данные получены и не пустые, используем их, иначе используем локальную переменную
                 if (data && Array.isArray(data) && data.length > 0) {
                     setPartsItems(data);
                 } else {
@@ -72,7 +71,6 @@ export default function PartsPage() {
                 }
             } catch (error) {
                 console.error('Error fetching parts:', error);
-                // При ошибке используем локальную переменную
                 setPartsItems(defaultPartsItems);
             } finally {
                 setLoading(false);

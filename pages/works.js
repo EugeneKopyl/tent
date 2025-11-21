@@ -19,7 +19,6 @@ export default function WorksPage() {
                 if (res.ok) {
                     const data = await res.json();
                     if (data && data.length > 0) {
-                        // Сортируем по дате создания (новые первыми)
                         dbWorks = data.sort((a, b) => {
                             const dateA = a.createdAt
                                 ? new Date(a.createdAt)
@@ -31,12 +30,10 @@ export default function WorksPage() {
                         });
                     }
                 }
-                // Объединяем: сначала картинки из БД, потом из публичной папки
                 const combinedItems = [...dbWorks, ...galleryItems];
                 setGalleryItemsState(combinedItems);
             } catch (error) {
                 console.error('Error fetching works:', error);
-                // В случае ошибки используем только картинки из публичной папки
                 setGalleryItemsState(galleryItems);
             } finally {
                 setLoading(false);
@@ -153,7 +150,6 @@ export default function WorksPage() {
                                                 }
                                             />
                                         )}
-                                        {/*<figcaption>{item.title}</figcaption>*/}
                                     </figure>
                                 </article>
                             </div>
@@ -189,7 +185,6 @@ export default function WorksPage() {
                                     }`}
                                 />
                             )}
-                            {/*<figcaption>{selectedImage.title}</figcaption>*/}
                         </figure>
                         {!isFirstImage && (
                             <button
