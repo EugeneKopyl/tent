@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 import imageCompression from 'browser-image-compression';
+import { generateSlug } from '@/lib/helpers';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
     ssr: false,
@@ -23,7 +24,6 @@ function AdminNewsTab() {
         category: '',
         published: false,
     });
-    const [previewId, setPreviewId] = useState(null);
     const [showCategoryModal, setShowCategoryModal] = useState(false);
     const [categoryForm, setCategoryForm] = useState({
         name: '',
@@ -410,11 +410,12 @@ function AdminNewsTab() {
         }
     }
 
-    const handlePreview = (id) => {
-        setPreviewId(id);
+    const handlePreview = (item) => {
+        // Генерируем slug, если его нет
+        const slug = item.slug || generateSlug(item.title);
+        const previewUrl = `/news/${slug}?preview=true`;
+        window.open(previewUrl, '_blank', 'noopener,noreferrer');
     };
-
-    const previewNews = news.find((n) => n._id === previewId);
 
     return (
         <div>
@@ -569,66 +570,6 @@ function AdminNewsTab() {
                                         </ul>
                                     )}
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
-
-            {previewId && previewNews && (
-                <div
-                    className="modal show d-block"
-                    style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}
-                    onClick={() => setPreviewId(null)}
-                >
-                    <div
-                        className="modal-dialog modal-lg"
-                        onClick={(e) => e.stopPropagation()}
-                    >
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title">Превью новости</h5>
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    onClick={() => setPreviewId(null)}
-                                ></button>
-                            </div>
-                            <div className="modal-body">
-                                <h2>{previewNews.title}</h2>
-                                {previewNews.previewImage && (
-                                    <img
-                                        src={previewNews.previewImage}
-                                        alt={previewNews.title}
-                                        className="img-fluid mb-3"
-                                        style={{
-                                            maxHeight: '300px',
-                                            objectFit: 'cover',
-                                        }}
-                                    />
-                                )}
-                                <div
-                                    className="news-content-preview"
-                                    dangerouslySetInnerHTML={{
-                                        __html: previewNews.content,
-                                    }}
-                                />
-                            </div>
-                            <div className="modal-footer">
-                                <button
-                                    className="btn btn-secondary"
-                                    onClick={() => setPreviewId(null)}
-                                >
-                                    Закрыть
-                                </button>
-                                <a
-                                    href={`/news/${previewNews.slug}?preview=true`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="btn btn-primary"
-                                >
-                                    Открыть в новой вкладке
-                                </a>
                             </div>
                         </div>
                     </div>
@@ -804,7 +745,7 @@ function AdminNewsTab() {
                                             <button
                                                 className="btn btn-info btn-sm"
                                                 onClick={() =>
-                                                    handlePreview(item._id)
+                                                    handlePreview(item)
                                                 }
                                             >
                                                 Превью

@@ -17,7 +17,7 @@ export default function NewsDetailPage() {
     useEffect(() => {
         const checkAuth = async () => {
             const preview = router.query.preview === 'true';
-            
+
             // Если есть preview параметр - разрешаем доступ
             if (preview) {
                 setIsAuthorized(true);
