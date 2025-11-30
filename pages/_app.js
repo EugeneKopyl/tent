@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'react-quill-new/dist/quill.snow.css';
 import '../styles/index.scss';
 import Layout from '@/components/layout';
 

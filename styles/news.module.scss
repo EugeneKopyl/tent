@@ -1,0 +1,152 @@
+.newsCard {
+    cursor: pointer;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.newsImageContainer {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background-color: #f8f9fa;
+}
+
+.newsImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.newsTitle {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.newsDescription {
+    font-size: 0.95rem;
+    color: #2b2d33;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 1rem;
+}
+
+.categoryBadge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #ffffff;
+    background-color: #6c757d;
+}
+
+.newsDetail {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.newsDetailTitle {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.newsDetailImageContainer {
+    width: 100%;
+    max-height: 500px;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background-color: #f8f9fa;
+}
+
+.newsDetailImage {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.newsContent {
+    line-height: 1.8;
+    font-size: 1.1rem;
+    color: #2b2d33;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 1.5rem;
+    }
+
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        margin: 1.5rem 0;
+    }
+
+    ul,
+    ol {
+        margin-bottom: 1.5rem;
+        padding-left: 2rem;
+    }
+
+    li {
+        margin-bottom: 0.5rem;
+    }
+
+    blockquote {
+        border-left: 4px solid #f8f9fa;
+        padding-left: 1.5rem;
+        margin: 1.5rem 0;
+        font-style: italic;
+        color: #6c757d;
+    }
+
+    a {
+        color: #f8f9fa;
+        text-decoration: none;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
+    code {
+        background-color: #f8f9fa;
+        padding: 0.2rem 0.4rem;
+        border-radius: 0.25rem;
+        font-size: 0.9em;
+    }
+
+    pre {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin-bottom: 1.5rem;
+
+        code {
+            background-color: transparent;
+            padding: 0;
+        }
+    }
+}

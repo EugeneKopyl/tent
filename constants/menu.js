@@ -16,6 +16,10 @@ export const navItems = [
         label: 'Наши работы',
     },
     {
+        url: '/news',
+        label: 'Новости',
+    },
+    {
         url: '/about',
         label: 'О нас',
     },
