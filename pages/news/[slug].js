@@ -10,9 +10,51 @@ export default function NewsDetailPage() {
     const [newsItem, setNewsItem] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [checkingAuth, setCheckingAuth] = useState(true);
+
+    // Проверка доступа: разрешен доступ через preview=true или для админов
+    useEffect(() => {
+        const checkAuth = async () => {
+            const preview = router.query.preview === 'true';
+            
+            // Если есть preview параметр - разрешаем доступ
+            if (preview) {
+                setIsAuthorized(true);
+                setCheckingAuth(false);
+                return;
+            }
+
+            // Иначе проверяем админ токен
+            try {
+                const response = await fetch('/api/admin/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    setIsAuthorized(true);
+                } else {
+                    // Если не авторизован и нет preview - редирект на главную
+                    router.push('/');
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                router.push('/');
+            } finally {
+                setCheckingAuth(false);
+            }
+        };
+
+        if (router.isReady) {
+            checkAuth();
+        }
+    }, [router.isReady, router.query.preview, router]);
 
     useEffect(() => {
-        if (!slug) return;
+        if (!slug || !isAuthorized || checkingAuth) return;
 
         const fetchNews = async () => {
             try {
@@ -38,7 +80,7 @@ export default function NewsDetailPage() {
         };
 
         fetchNews();
-    }, [slug, router.query.preview]);
+    }, [slug, router.query.preview, isAuthorized, checkingAuth]);
 
     const formatDate = (dateString) => {
         if (!dateString) return '';
@@ -52,14 +94,19 @@ export default function NewsDetailPage() {
         });
     };
 
-    if (loading) {
+    // Показываем загрузку во время проверки авторизации или загрузки данных
+    if (checkingAuth || !isAuthorized || loading) {
         return (
             <div className="container pt-4">
                 <div className="text-center py-5">
                     <div className="spinner-border text-dark" role="status">
                         <span className="visually-hidden">Загрузка...</span>
                     </div>
-                    <p className="mt-3">Загружаем новость...</p>
+                    <p className="mt-3">
+                        {checkingAuth || !isAuthorized
+                            ? 'Проверка доступа...'
+                            : 'Загружаем новость...'}
+                    </p>
                 </div>
             </div>
         );
@@ -141,7 +188,8 @@ export default function NewsDetailPage() {
                 />
             </Head>
 
-            <div className="mb-3">
+            {/* Временно скрыта кнопка "Назад к новостям" */}
+            {/* <div className="mb-3">
                 <Link href="/news" className="btn btn-sm btn-outline-secondary">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -158,7 +206,7 @@ export default function NewsDetailPage() {
                     </svg>
                     Назад к новостям
                 </Link>
-            </div>
+            </div> */}
 
             <article
                 className={styles.newsDetail}

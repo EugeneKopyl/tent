@@ -137,12 +137,45 @@ const NewsCard = ({ item }) => {
 };
 
 export default function NewsPage() {
+    const router = useRouter();
     const [newsItems, setNewsItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [categories, setCategories] = useState([]);
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [checkingAuth, setCheckingAuth] = useState(true);
+
+    // Проверка доступа: только для админов
+    useEffect(() => {
+        const checkAuth = async () => {
+            try {
+                const response = await fetch('/api/admin/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    setIsAuthorized(true);
+                } else {
+                    // Если не авторизован - редирект на главную
+                    router.push('/');
+                }
+            } catch (error) {
+                console.error('Auth check failed:', error);
+                router.push('/');
+            } finally {
+                setCheckingAuth(false);
+            }
+        };
+
+        checkAuth();
+    }, [router]);
 
     useEffect(() => {
+        // Не загружаем данные, если не авторизован
+        if (!isAuthorized || checkingAuth) return;
         const fetchData = async () => {
             try {
                 const [newsRes, categoriesRes] = await Promise.all([
@@ -179,7 +212,7 @@ export default function NewsPage() {
         };
 
         fetchData();
-    }, []);
+    }, [isAuthorized, checkingAuth]);
 
     const filteredNews = newsItems.filter((item) => {
         const isPublished = item.published === true;
@@ -237,6 +270,20 @@ export default function NewsPage() {
             },
         })),
     };
+
+    // Показываем загрузку во время проверки авторизации
+    if (checkingAuth || !isAuthorized) {
+        return (
+            <div className="container pt-4">
+                <div className="text-center py-5">
+                    <div className="spinner-border text-dark" role="status">
+                        <span className="visually-hidden">Загрузка...</span>
+                    </div>
+                    <p className="mt-3">Проверка доступа...</p>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="container pt-4">
