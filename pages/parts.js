@@ -8,8 +8,8 @@ const PartsCard = ({ item }) => {
     return (
         <article
             className="col-6 col-md-4 col-lg-3 my-3"
-            itemscope=""
-            itemtype="https://schema.org/Product"
+            itemScope=""
+            itemType="https://schema.org/Product"
         >
             <div className={styles.cardItemContainer}>
                 <Image
@@ -18,30 +18,30 @@ const PartsCard = ({ item }) => {
                     width={300}
                     height={300}
                     className="img-fluid card-img-top"
-                    itemprop="image"
+                    itemProp="image"
                 />
                 <div className="card-body">
                     <h3 className={'p-2 m-0 ' + styles.cardItemTitle}>
                         <span
                             className={styles.titleText}
                             title={item.title}
-                            itemprop="name"
+                            itemProp="name"
                         >
                             {item.title}
                         </span>
-                        <meta itemprop="description" content={item.title} />
+                        <meta itemProp="description" content={item.title} />
                     </h3>
                 </div>
                 <span
-                    itemprop="offers"
-                    itemscope=""
-                    itemtype="https://schema.org/Offer"
+                    itemProp="offers"
+                    itemScope=""
+                    itemType="https://schema.org/Offer"
                     className={`${styles.textAvailability} p-2`}
                 >
-                    <meta itemprop="priceCurrency" content={item.currency} />
-                    <meta itemprop="price" content={item.price} />
+                    <meta itemProp="priceCurrency" content={item.currency} />
+                    <meta itemProp="price" content={item.price} />
                     <link
-                        itemprop="availability"
+                        itemProp="availability"
                         href="https://schema.org/InStock"
                     />
                     В наличии
@@ -88,11 +88,44 @@ export default function PartsPage() {
         item.title.toLowerCase().includes(searchText.toLowerCase()),
     );
 
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined') {
+            return window.location.origin;
+        }
+        return '';
+    };
+
+    const catalogSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'OfferCatalog',
+        name: 'Каталог запчастей ИнтерТентСервис',
+        description: 'Широкий асортимент запчастей и аксессуаров для автомобилей',
+        numberOfItems: filteredItems.length,
+        itemListElement: filteredItems.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+                '@type': 'Product',
+                name: item.title,
+                description: item.title,
+                image: item.image?.startsWith('http') || item.image?.startsWith('data:image/')
+                    ? item.image
+                    : `${getBaseUrl()}${item.image}`,
+                offers: {
+                    '@type': 'Offer',
+                    price: item.price,
+                    priceCurrency: item.currency || 'BYN',
+                    availability: 'https://schema.org/InStock',
+                },
+            },
+        })),
+    };
+
     return (
         <div
             className="container pt-4"
-            itemscope=""
-            itemtype="https://schema.org/OfferCatalog"
+            itemScope=""
+            itemType="https://schema.org/OfferCatalog"
         >
             <Head>
                 <title>
@@ -103,12 +136,16 @@ export default function PartsPage() {
                     name="description"
                     content="ИнтерТентСервис - Широкий асортимент запчастей и аксессуаров для автомобилей."
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogSchema) }}
+                />
             </Head>
-            <header className="text-center" itemprop="name">
+            <header className="text-center" itemProp="name">
                 <h1>Каталог запчастей</h1>
             </header>
             <section aria-label="Поиск запчастей">
-                <p itemprop="description">
+                <p itemProp="description">
                     Перечень запчастей представленный в каталоге может быть не
                     полный, наличие и цены уточняйте по телефону.
                 </p>
@@ -151,8 +188,8 @@ export default function PartsPage() {
                 ) : (
                     <div
                         className="row"
-                        itemscope=""
-                        itemtype="https://schema.org/OfferCatalog"
+                        itemScope=""
+                        itemType="https://schema.org/OfferCatalog"
                     >
                         {filteredItems.length > 0 ? (
                             filteredItems.map((item, index) => (
