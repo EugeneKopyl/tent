@@ -2,6 +2,7 @@ import ErrorBoundary from '../../components/ErrorBoundary';
 import AdminPartsTab from './AdminPartsTab';
 import AdminInfoTab from './AdminInfoTab';
 import AdminWorksTab from './AdminWorksTab';
+import AdminNewsTab from './AdminNewsTab';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
@@ -122,6 +123,14 @@ function AdminDashboardLayout() {
                             Галерея работ
                         </button>
                     </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${tab === 'news' ? 'active' : ''}`}
+                            onClick={() => setTab('news')}
+                        >
+                            Новости
+                        </button>
+                    </li>
                 </ul>
                 <div>
                     {tab === 'admin' && userRole === 'superadmin' && (
@@ -135,6 +144,7 @@ function AdminDashboardLayout() {
                     )}
                     {tab === 'parts' && <AdminPartsTab userRole={userRole} />}
                     {tab === 'works' && <AdminWorksTab userRole={userRole} />}
+                    {tab === 'news' && <AdminNewsTab userRole={userRole} />}
                 </div>
             </div>
         </ErrorBoundary>

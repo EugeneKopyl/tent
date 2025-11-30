@@ -14,7 +14,7 @@ function AdminWorksTab({ userRole }) {
         image: '',
     });
     const [compressionOptions, setCompressionOptions] = useState({
-        maxSizeMB: 1,
+        maxSizeMB: 0.8,
         maxWidthOrHeight: 1920,
         useWebWorker: true,
     });

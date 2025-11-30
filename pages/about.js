@@ -3,8 +3,42 @@ import Head from 'next/head';
 import styles from '../styles/about.module.scss';
 
 export default function About() {
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined') {
+            return window.location.origin;
+        }
+        return '';
+    };
+
+    const organizationSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'ООО "ИнтерТентСервис"',
+        description:
+            'Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения. Мы используем инновационные технологии для создания долговечных и надежных тентовых конструкций.',
+        foundingDate: '2017',
+        url: getBaseUrl(),
+        logo: `${getBaseUrl()}/logo512.png`,
+        address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'улица Бабушкина, 27к5',
+            addressLocality: 'Минск',
+            addressCountry: 'BY',
+        },
+        contactPoint: {
+            '@type': 'ContactPoint',
+            telephone: '+375293761761',
+            contactType: 'customer service',
+            email: 'intertentservice@gmail.com',
+        },
+    };
+
     return (
-        <div className="container pt-4">
+        <div
+            className="container pt-4"
+            itemScope
+            itemType="https://schema.org/Organization"
+        >
             <Head>
                 <title>
                     ИнтерТентСервис - О нас - Изготовление и Ремонт Тентов для
@@ -14,7 +48,18 @@ export default function About() {
                     name="description"
                     content="ИнтерТентСервис - Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения."
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(organizationSchema),
+                    }}
+                />
             </Head>
+            <meta itemProp="name" content='ООО "ИнтерТентСервис"' />
+            <meta
+                itemProp="description"
+                content="Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения."
+            />
             <header className="text-center">
                 <h1 className={styles.header}>О нас</h1>
             </header>

@@ -89,8 +89,42 @@ export default function WorksPage() {
     const isFirstImage = currentIndex === 0;
     const isLastImage = currentIndex === galleryItemsState.length - 1;
 
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined') {
+            return window.location.origin;
+        }
+        return '';
+    };
+
+    const imageGallerySchema = {
+        '@context': 'https://schema.org',
+        '@type': 'ImageGallery',
+        name: 'Примеры наших работ',
+        description:
+            'Галерея примеров работ по изготовлению и ремонту тентов для автомобилей и прицепов',
+        numberOfItems: galleryItemsState.length,
+        itemListElement: galleryItemsState.map((item, index) => ({
+            '@type': 'ListItem',
+            position: index + 1,
+            item: {
+                '@type': 'ImageObject',
+                name: item.title || 'Пример работы',
+                description: item.description || item.title || 'Пример работы',
+                image:
+                    item.image?.startsWith('http') ||
+                    item.image?.startsWith('data:image/')
+                        ? item.image
+                        : `${getBaseUrl()}/${item.image}`,
+            },
+        })),
+    };
+
     return (
-        <section className="container pt-4">
+        <section
+            className="container pt-4"
+            itemScope
+            itemType="https://schema.org/ImageGallery"
+        >
             <Head>
                 <title>
                     ИнтерТентСервис - Галерея - Изготовление и Ремонт Тентов для
@@ -100,7 +134,14 @@ export default function WorksPage() {
                     name="description"
                     content="Тенты Минск - ИнтерТентСервис - В данном разделе можно ознакомится с примерами наших работ."
                 />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(imageGallerySchema),
+                    }}
+                />
             </Head>
+            <meta itemProp="name" content="Примеры наших работ" />
             <header className="text-center">
                 <h1>Примеры наших робот</h1>
             </header>
@@ -115,13 +156,27 @@ export default function WorksPage() {
                             <div
                                 key={imageKey}
                                 className="col-md-4 col-lg-3 my-3"
+                                itemProp="itemListElement"
+                                itemScope
+                                itemType="https://schema.org/ListItem"
                             >
-                                <article>
-                                    <figure>
+                                <article
+                                    itemProp="item"
+                                    itemScope
+                                    itemType="https://schema.org/ImageObject"
+                                >
+                                    <meta
+                                        itemProp="position"
+                                        content={index + 1}
+                                    />
+                                    <figure itemProp="image">
                                         {isDataUrl ? (
                                             <img
                                                 src={item.image}
-                                                alt={item.title}
+                                                alt={
+                                                    item.title ||
+                                                    'Пример работы'
+                                                }
                                                 className={
                                                     'img-fluid ' +
                                                     styles.galleryImage
@@ -134,11 +189,15 @@ export default function WorksPage() {
                                                     height: 'auto',
                                                     cursor: 'pointer',
                                                 }}
+                                                itemProp="contentUrl"
                                             />
                                         ) : (
                                             <Image
                                                 src={item.image}
-                                                alt={item.title}
+                                                alt={
+                                                    item.title ||
+                                                    'Пример работы'
+                                                }
                                                 width={300}
                                                 height={300}
                                                 className={
@@ -148,9 +207,22 @@ export default function WorksPage() {
                                                 onClick={() =>
                                                     handleClick(item, index)
                                                 }
+                                                itemProp="contentUrl"
                                             />
                                         )}
                                     </figure>
+                                    {item.title && (
+                                        <meta
+                                            itemProp="name"
+                                            content={item.title}
+                                        />
+                                    )}
+                                    {item.description && (
+                                        <meta
+                                            itemProp="description"
+                                            content={item.description}
+                                        />
+                                    )}
                                 </article>
                             </div>
                         );

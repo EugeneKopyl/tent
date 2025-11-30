@@ -15,6 +15,11 @@ export const navItems = [
         url: '/works',
         label: 'Наши работы',
     },
+    // Временно отключено
+    // {
+    //     url: '/news',
+    //     label: 'Новости',
+    // },
     {
         url: '/about',
         label: 'О нас',
