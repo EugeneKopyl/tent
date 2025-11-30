@@ -79,7 +79,9 @@ export default function ContactsPage() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(organizationSchema),
+                    }}
                 />
             </Head>
             <meta itemProp="name" content="Изготовление и ремонт тентов" />

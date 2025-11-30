@@ -25,12 +25,14 @@ const NewsCard = ({ item }) => {
         if (imageUrl.startsWith('data:image/') || imageUrl.startsWith('http')) {
             return imageUrl;
         }
-        const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+        const baseUrl =
+            typeof window !== 'undefined' ? window.location.origin : '';
         return `${baseUrl}${imageUrl}`;
     };
 
     const getArticleUrl = () => {
-        const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+        const baseUrl =
+            typeof window !== 'undefined' ? window.location.origin : '';
         return `${baseUrl}/news/${item.slug}`;
     };
 
@@ -63,10 +65,16 @@ const NewsCard = ({ item }) => {
     };
 
     return (
-        <article className="col-md-6 col-lg-4 my-3" itemScope itemType="https://schema.org/NewsArticle">
+        <article
+            className="col-md-6 col-lg-4 my-3"
+            itemScope
+            itemType="https://schema.org/NewsArticle"
+        >
             <script
                 type="application/ld+json"
-                dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+                dangerouslySetInnerHTML={{
+                    __html: JSON.stringify(articleSchema),
+                }}
             />
             <div
                 className={`card h-100 ${styles.newsCard}`}
@@ -91,11 +99,17 @@ const NewsCard = ({ item }) => {
                 </div>
                 <div className="card-body d-flex flex-column">
                     {item.category && (
-                        <span className={`badge mb-2 ${styles.categoryBadge}`} itemProp="articleSection">
+                        <span
+                            className={`badge mb-2 ${styles.categoryBadge}`}
+                            itemProp="articleSection"
+                        >
                             {item.category.name}
                         </span>
                     )}
-                    <h3 className={`card-title ${styles.newsTitle}`} itemProp="headline">
+                    <h3
+                        className={`card-title ${styles.newsTitle}`}
+                        itemProp="headline"
+                    >
                         {item.title}
                     </h3>
                     {item.shortDescription && (
@@ -108,7 +122,10 @@ const NewsCard = ({ item }) => {
                     )}
                     <div className="mt-auto">
                         <small className="text-muted">
-                            <time itemProp="datePublished" dateTime={item.publishedAt || item.createdAt}>
+                            <time
+                                itemProp="datePublished"
+                                dateTime={item.publishedAt || item.createdAt}
+                            >
                                 {formatDate(item.publishedAt || item.createdAt)}
                             </time>
                         </small>
@@ -209,9 +226,11 @@ export default function NewsPage() {
                 '@type': 'NewsArticle',
                 headline: item.title,
                 description: item.shortDescription || item.title,
-                image: item.previewImage?.startsWith('http') || item.previewImage?.startsWith('data:image/')
-                    ? item.previewImage
-                    : `${getBaseUrl()}${item.previewImage || '/logo512.png'}`,
+                image:
+                    item.previewImage?.startsWith('http') ||
+                    item.previewImage?.startsWith('data:image/')
+                        ? item.previewImage
+                        : `${getBaseUrl()}${item.previewImage || '/logo512.png'}`,
                 datePublished: item.publishedAt || item.createdAt,
                 url: `${getBaseUrl()}/news/${item.slug}`,
                 articleSection: item.category?.name,
@@ -232,7 +251,9 @@ export default function NewsPage() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(itemListSchema),
+                    }}
                 />
             </Head>
             <header className="text-center mb-4">

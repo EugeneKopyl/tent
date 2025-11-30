@@ -14,7 +14,8 @@ export default function About() {
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'ООО "ИнтерТентСервис"',
-        description: 'Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения. Мы используем инновационные технологии для создания долговечных и надежных тентовых конструкций.',
+        description:
+            'Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения. Мы используем инновационные технологии для создания долговечных и надежных тентовых конструкций.',
         foundingDate: '2017',
         url: getBaseUrl(),
         logo: `${getBaseUrl()}/logo512.png`,
@@ -33,7 +34,11 @@ export default function About() {
     };
 
     return (
-        <div className="container pt-4" itemScope itemType="https://schema.org/Organization">
+        <div
+            className="container pt-4"
+            itemScope
+            itemType="https://schema.org/Organization"
+        >
             <Head>
                 <title>
                     ИнтерТентСервис - О нас - Изготовление и Ремонт Тентов для
@@ -45,11 +50,16 @@ export default function About() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(organizationSchema),
+                    }}
                 />
             </Head>
             <meta itemProp="name" content='ООО "ИнтерТентСервис"' />
-            <meta itemProp="description" content="Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения." />
+            <meta
+                itemProp="description"
+                content="Начиная с 2017 года, наша компания работает на рынке тентов и каркасов, предлагая только высококачественные решения."
+            />
             <header className="text-center">
                 <h1 className={styles.header}>О нас</h1>
             </header>

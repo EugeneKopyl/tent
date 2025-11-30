@@ -99,7 +99,8 @@ export default function PartsPage() {
         '@context': 'https://schema.org',
         '@type': 'OfferCatalog',
         name: 'Каталог запчастей ИнтерТентСервис',
-        description: 'Широкий асортимент запчастей и аксессуаров для автомобилей',
+        description:
+            'Широкий асортимент запчастей и аксессуаров для автомобилей',
         numberOfItems: filteredItems.length,
         itemListElement: filteredItems.map((item, index) => ({
             '@type': 'ListItem',
@@ -108,9 +109,11 @@ export default function PartsPage() {
                 '@type': 'Product',
                 name: item.title,
                 description: item.title,
-                image: item.image?.startsWith('http') || item.image?.startsWith('data:image/')
-                    ? item.image
-                    : `${getBaseUrl()}${item.image}`,
+                image:
+                    item.image?.startsWith('http') ||
+                    item.image?.startsWith('data:image/')
+                        ? item.image
+                        : `${getBaseUrl()}${item.image}`,
                 offers: {
                     '@type': 'Offer',
                     price: item.price,
@@ -138,7 +141,9 @@ export default function PartsPage() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(catalogSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(catalogSchema),
+                    }}
                 />
             </Head>
             <header className="text-center" itemProp="name">

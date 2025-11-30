@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
+import imageCompression from 'browser-image-compression';
 
 const ReactQuill = dynamic(() => import('react-quill-new'), {
     ssr: false,
@@ -27,6 +28,11 @@ function AdminNewsTab() {
     const [categoryForm, setCategoryForm] = useState({
         name: '',
         description: '',
+    });
+    const [compressionOptions, setCompressionOptions] = useState({
+        maxSizeMB: 0.8,
+        maxWidthOrHeight: 1920,
+        useWebWorker: true,
     });
     const formRef = useRef(null);
     const quillRef = useRef(null);
@@ -236,12 +242,41 @@ function AdminNewsTab() {
         }
     }
 
-    function handleFileChange(e, cb) {
+    async function compressImage(file) {
+        try {
+            const compressedFile = await imageCompression(
+                file,
+                compressionOptions,
+            );
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(compressedFile);
+            });
+        } catch (error) {
+            console.error('Error compressing image:', error);
+            throw error;
+        }
+    }
+
+    async function handleFileChange(e, cb) {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new window.FileReader();
-            reader.onloadend = () => cb(reader.result);
-            reader.readAsDataURL(file);
+        if (!file) return;
+
+        if (!file.type.startsWith('image/')) {
+            setError('Пожалуйста, выберите файл изображения');
+            return;
+        }
+
+        try {
+            setError('Сжатие изображения...');
+            const compressedDataUrl = await compressImage(file);
+            cb(compressedDataUrl);
+            setError('');
+        } catch (error) {
+            setError('Ошибка обработки изображения: ' + error.message);
+            console.error('Error processing image:', error);
         }
     }
 
@@ -251,30 +286,40 @@ function AdminNewsTab() {
         input.setAttribute('accept', 'image/*');
         input.click();
 
-        input.onchange = () => {
+        input.onchange = async () => {
             const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const editorElement = document
-                        .querySelector('.ql-editor')
-                        ?.closest('.quill');
-                    if (editorElement && editorElement.__quill) {
-                        const quill = editorElement.__quill;
-                        const range = quill.getSelection(true);
-                        const index = range ? range.index : quill.getLength();
-                        quill.insertEmbed(index, 'image', reader.result);
-                        quill.setSelection(index + 1);
-                        setTimeout(() => {
-                            handleContentChange(quill.root.innerHTML);
-                        }, 0);
-                    } else {
-                        const currentContent = newNews.content || '';
-                        const imgTag = `<img src="${reader.result}" alt="Uploaded image" style="max-width: 100%; height: auto;" />`;
-                        handleContentChange(currentContent + imgTag);
-                    }
-                };
-                reader.readAsDataURL(file);
+            if (!file) return;
+
+            if (!file.type.startsWith('image/')) {
+                setError('Пожалуйста, выберите файл изображения');
+                return;
+            }
+
+            try {
+                setError('Сжатие изображения...');
+                const compressedDataUrl = await compressImage(file);
+
+                const editorElement = document
+                    .querySelector('.ql-editor')
+                    ?.closest('.quill');
+                if (editorElement && editorElement.__quill) {
+                    const quill = editorElement.__quill;
+                    const range = quill.getSelection(true);
+                    const index = range ? range.index : quill.getLength();
+                    quill.insertEmbed(index, 'image', compressedDataUrl);
+                    quill.setSelection(index + 1);
+                    setTimeout(() => {
+                        handleContentChange(quill.root.innerHTML);
+                    }, 0);
+                } else {
+                    const currentContent = newNews.content || '';
+                    const imgTag = `<img src="${compressedDataUrl}" alt="Uploaded image" style="max-width: 100%; height: auto;" />`;
+                    handleContentChange(currentContent + imgTag);
+                }
+                setError('');
+            } catch (error) {
+                setError('Ошибка обработки изображения: ' + error.message);
+                console.error('Error processing image:', error);
             }
         };
     };

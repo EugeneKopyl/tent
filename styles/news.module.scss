@@ -68,12 +68,19 @@
     overflow: hidden;
     border-radius: 0.5rem;
     background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
 .newsDetailImage {
     width: 100%;
     height: auto;
+    max-height: 500px;
     object-fit: cover;
+    object-position: center center;
+    display: block;
 }
 
 .newsContent {

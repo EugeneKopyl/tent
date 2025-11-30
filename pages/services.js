@@ -49,7 +49,8 @@ export default function ServicesPage() {
         '@context': 'https://schema.org',
         '@type': 'Service',
         name: 'Изготовление и ремонт тентов',
-        description: 'Услуги по ремонту и изготовлению тентов для автомобилей, грузовиков и прицепов, ремонт каркасов',
+        description:
+            'Услуги по ремонту и изготовлению тентов для автомобилей, грузовиков и прицепов, ремонт каркасов',
         hasOfferCatalog: {
             '@type': 'OfferCatalog',
             name: 'Каталог услуг',
@@ -59,9 +60,11 @@ export default function ServicesPage() {
                     '@type': 'Service',
                     name: card.title,
                     description: card.description,
-                    image: card.image?.startsWith('http') || card.image?.startsWith('data:image/')
-                        ? card.image
-                        : `${getBaseUrl()}/${card.image || 'images/main_logo.jpg'}`,
+                    image:
+                        card.image?.startsWith('http') ||
+                        card.image?.startsWith('data:image/')
+                            ? card.image
+                            : `${getBaseUrl()}/${card.image || 'images/main_logo.jpg'}`,
                     serviceType: card.title,
                 },
             })),
@@ -85,7 +88,9 @@ export default function ServicesPage() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceCatalogSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(serviceCatalogSchema),
+                    }}
                 />
             </Head>
             <meta itemProp="name" content="Изготовление и ремонт тентов" />

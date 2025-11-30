@@ -99,9 +99,12 @@ export default function NewsDetailPage() {
         '@type': 'NewsArticle',
         headline: newsItem.title,
         description: newsItem.shortDescription || newsItem.title,
-        image: newsItem.previewImage ? getFullImageUrl(newsItem.previewImage) : `${getBaseUrl()}/logo512.png`,
+        image: newsItem.previewImage
+            ? getFullImageUrl(newsItem.previewImage)
+            : `${getBaseUrl()}/logo512.png`,
         datePublished: newsItem.publishedAt || newsItem.createdAt,
-        dateModified: newsItem.updatedAt || newsItem.publishedAt || newsItem.createdAt,
+        dateModified:
+            newsItem.updatedAt || newsItem.publishedAt || newsItem.createdAt,
         author: {
             '@type': 'Organization',
             name: 'ИнтерТентСервис',
@@ -132,7 +135,9 @@ export default function NewsDetailPage() {
                 />
                 <script
                     type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(articleSchema),
+                    }}
                 />
             </Head>
 
@@ -155,17 +160,31 @@ export default function NewsDetailPage() {
                 </Link>
             </div>
 
-            <article className={styles.newsDetail} itemScope itemType="https://schema.org/NewsArticle">
+            <article
+                className={styles.newsDetail}
+                itemScope
+                itemType="https://schema.org/NewsArticle"
+            >
                 <header className="mb-4">
                     {newsItem.category && (
-                        <span className={`badge mb-2 ${styles.categoryBadge}`} itemProp="articleSection">
+                        <span
+                            className={`badge mb-2 ${styles.categoryBadge}`}
+                            itemProp="articleSection"
+                        >
                             {newsItem.category.name}
                         </span>
                     )}
-                    <h1 className={styles.newsDetailTitle} itemProp="headline">{newsItem.title}</h1>
+                    <h1 className={styles.newsDetailTitle} itemProp="headline">
+                        {newsItem.title}
+                    </h1>
                     <div className="text-muted mb-3">
                         <small>
-                            <time itemProp="datePublished" dateTime={newsItem.publishedAt || newsItem.createdAt}>
+                            <time
+                                itemProp="datePublished"
+                                dateTime={
+                                    newsItem.publishedAt || newsItem.createdAt
+                                }
+                            >
                                 {formatDate(
                                     newsItem.publishedAt || newsItem.createdAt,
                                 )}
@@ -199,14 +218,34 @@ export default function NewsDetailPage() {
                     dangerouslySetInnerHTML={{ __html: newsItem.content }}
                     itemProp="articleBody"
                 />
-                <meta itemProp="description" content={newsItem.shortDescription || newsItem.title} />
-                <div itemProp="author" itemScope itemType="https://schema.org/Organization" style={{ display: 'none' }}>
+                <meta
+                    itemProp="description"
+                    content={newsItem.shortDescription || newsItem.title}
+                />
+                <div
+                    itemProp="author"
+                    itemScope
+                    itemType="https://schema.org/Organization"
+                    style={{ display: 'none' }}
+                >
                     <span itemProp="name">ИнтерТентСервис</span>
                 </div>
-                <div itemProp="publisher" itemScope itemType="https://schema.org/Organization" style={{ display: 'none' }}>
+                <div
+                    itemProp="publisher"
+                    itemScope
+                    itemType="https://schema.org/Organization"
+                    style={{ display: 'none' }}
+                >
                     <span itemProp="name">ИнтерТентСервис</span>
-                    <div itemProp="logo" itemScope itemType="https://schema.org/ImageObject">
-                        <meta itemProp="url" content={`${getBaseUrl()}/logo512.png`} />
+                    <div
+                        itemProp="logo"
+                        itemScope
+                        itemType="https://schema.org/ImageObject"
+                    >
+                        <meta
+                            itemProp="url"
+                            content={`${getBaseUrl()}/logo512.png`}
+                        />
                     </div>
                 </div>
             </article>
