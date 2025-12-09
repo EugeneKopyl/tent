@@ -63,8 +63,7 @@ export default async function handler(req, res) {
 
         resetRateLimit(clientIP);
 
-        user.lastLogin = new Date();
-        await user.save();
+        await User.updateOne({ _id: user._id }, { lastLogin: new Date() });
 
         const token = generateToken(user._id);
 

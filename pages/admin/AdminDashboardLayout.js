@@ -5,8 +5,10 @@ import AdminWorksTab from './AdminWorksTab';
 import AdminNewsTab from './AdminNewsTab';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useAuthGuard } from '@/lib/authGuard';
 
 function AdminDashboardLayout() {
+    const { isChecking } = useAuthGuard();
     const [tab, setTab] = useState('parts');
     const [users, setUsers] = useState([]);
     const [userRole, setUserRole] = useState(null);
@@ -15,6 +17,8 @@ function AdminDashboardLayout() {
     const router = useRouter();
 
     useEffect(() => {
+        if (isChecking) return;
+
         async function fetchRole() {
             try {
                 const res = await fetch('/api/admin/verify', {
@@ -27,13 +31,16 @@ function AdminDashboardLayout() {
                     if (data.role === 'superadmin') {
                         setTab('admin');
                     }
+                } else {
+                    router.push('/');
                 }
             } catch (e) {
                 console.error('Error fetching role:', e);
+                router.push('/');
             }
         }
         fetchRole();
-    }, []);
+    }, [isChecking, router]);
 
     const fetchUsers = async () => {
         setLoadingUsers(true);
@@ -84,6 +91,17 @@ function AdminDashboardLayout() {
         }
         router.push('/admin/login');
     };
+
+    if (isChecking) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: '100vh' }}
+            >
+                <div className="text-muted">Проверка аутентификации...</div>
+            </div>
+        );
+    }
 
     return (
         <ErrorBoundary>
