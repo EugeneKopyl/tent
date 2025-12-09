@@ -160,7 +160,6 @@ function AdminPartsTab({ userRole }) {
             if (res.ok) {
                 fetchParts();
                 setRestoreFile(null);
-                // Очищаем input
                 const fileInput = document.getElementById('backup-file-input');
                 if (fileInput) fileInput.value = '';
             }

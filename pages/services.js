@@ -7,29 +7,19 @@ import { serviceItems } from '@/constants/services';
 const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
     return (
         <div
-            itemprop="itemListElement"
-            itemscope=""
-            itemtype="https://schema.org/Offer"
+            itemProp="itemListElement"
+            itemScope=""
+            itemType="https://schema.org/Offer"
         >
-            <Head>
-                <title>
-                    ИнтерТентСервис - Услуги - Изготовление и Ремонт Тентов для
-                    Автомобилей и Прицепов
-                </title>
-                <meta
-                    name="description"
-                    content="ИнтерТентСервис - Услуги по ремонту и изготовлению тентов для автомобилей, грузовиков и прицепов, ремонт каркасов."
-                />
-            </Head>
             <article
                 className={`${styles.cardContainer} text-center ${
                     imagePosition === 'right' ? styles.right : styles.left
                 }`}
-                itemprop="itemOffered"
-                itemscope=""
-                itemtype="https://schema.org/Service"
+                itemProp="itemOffered"
+                itemScope=""
+                itemType="https://schema.org/Service"
             >
-                <figure className={styles.cardImage} itemprop="image">
+                <figure className={styles.cardImage} itemProp="image">
                     <Image
                         src={image || 'images/main_logo.jpg'}
                         alt={title}
@@ -48,18 +38,67 @@ const SimpleCard = ({ card: { image, title, description }, imagePosition }) => {
 };
 
 export default function ServicesPage() {
+    const getBaseUrl = () => {
+        if (typeof window !== 'undefined') {
+            return window.location.origin;
+        }
+        return '';
+    };
+
+    const serviceCatalogSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'Service',
+        name: 'Изготовление и ремонт тентов',
+        description:
+            'Услуги по ремонту и изготовлению тентов для автомобилей, грузовиков и прицепов, ремонт каркасов',
+        hasOfferCatalog: {
+            '@type': 'OfferCatalog',
+            name: 'Каталог услуг',
+            itemListElement: serviceItems.map((card) => ({
+                '@type': 'Offer',
+                itemOffered: {
+                    '@type': 'Service',
+                    name: card.title,
+                    description: card.description,
+                    image:
+                        card.image?.startsWith('http') ||
+                        card.image?.startsWith('data:image/')
+                            ? card.image
+                            : `${getBaseUrl()}/${card.image || 'images/main_logo.jpg'}`,
+                    serviceType: card.title,
+                },
+            })),
+        },
+    };
+
     return (
         <div
             className="container my-3 pt-4"
-            itemscope=""
-            itemtype="https://schema.org/Service"
+            itemScope=""
+            itemType="https://schema.org/Service"
         >
-            <meta itemprop="name" content="Изготовление и ремонт тентов" />
+            <Head>
+                <title>
+                    ИнтерТентСервис - Услуги - Изготовление и Ремонт Тентов для
+                    Автомобилей и Прицепов
+                </title>
+                <meta
+                    name="description"
+                    content="ИнтерТентСервис - Услуги по ремонту и изготовлению тентов для автомобилей, грузовиков и прицепов, ремонт каркасов."
+                />
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{
+                        __html: JSON.stringify(serviceCatalogSchema),
+                    }}
+                />
+            </Head>
+            <meta itemProp="name" content="Изготовление и ремонт тентов" />
             <h1>Наши услуги</h1>
             <section
-                itemprop="hasOfferCatalog"
-                itemscope=""
-                itemtype="https://schema.org/OfferCatalog"
+                itemProp="hasOfferCatalog"
+                itemScope=""
+                itemType="https://schema.org/OfferCatalog"
             >
                 {serviceItems.map((card, index) => (
                     <SimpleCard

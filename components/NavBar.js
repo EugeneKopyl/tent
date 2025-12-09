@@ -52,8 +52,8 @@ export default function NavBar() {
             <Container className="flex-wrap">
                 <div
                     className="row m-0 w-100"
-                    itemscope=""
-                    itemtype="https://schema.org/AutoRepair"
+                    itemScope=""
+                    itemType="https://schema.org/AutoRepair"
                 >
                     <meta
                         itemProp="name"
@@ -61,9 +61,9 @@ export default function NavBar() {
                     />
                     <div
                         className="col-12 col-md-4 p-2"
-                        itemprop="address"
-                        itemscope=""
-                        itemtype="https://schema.org/PostalAddress"
+                        itemProp="address"
+                        itemScope=""
+                        itemType="https://schema.org/PostalAddress"
                     >
                         <button
                             className="d-flex p-0"
@@ -90,11 +90,11 @@ export default function NavBar() {
                                     </svg>
                                 </span>
                                 <span className="d-inline-flex flex-wrap">
-                                    <span itemprop="streetAddress">
+                                    <span itemProp="streetAddress">
                                         улица Бабушкина, 27к5
                                     </span>
                                     <span>,&nbsp;</span>
-                                    <span itemprop="addressLocality">
+                                    <span itemProp="addressLocality">
                                         Минск
                                     </span>
                                 </span>
@@ -116,7 +116,7 @@ export default function NavBar() {
                                     <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm7-8A7 7 0 1 1 1 8a7 7 0 0 1 14 0z" />
                                 </svg>
                             </div>
-                            <div itemprop="openingHours">
+                            <div itemProp="openingHours">
                                 <time>8:30-20:00</time>
                                 <div>ежедневно</div>
                             </div>
@@ -137,7 +137,7 @@ export default function NavBar() {
                                         <path d="M1.885.511a1.745 1.745 0 0 1 2.61.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.678.678 0 0 0 .178.643l2.457 2.457a.678.678 0 0 0 .644.178l2.189-.547a1.745 1.745 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.634 18.634 0 0 1-7.01-4.42 18.634 18.634 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877L1.885.511z" />
                                     </svg>
                                 </span>
-                                <span itemprop="telephone">
+                                <span itemProp="telephone">
                                     +375 (29) 376-17-61
                                 </span>
                             </a>
@@ -145,7 +145,7 @@ export default function NavBar() {
                                 href="tel:+375447171617"
                                 className="col-12 bold ms-3"
                             >
-                                <span itemprop="telephone">
+                                <span itemProp="telephone">
                                     +375 (44) 717-16-17
                                 </span>
                             </a>

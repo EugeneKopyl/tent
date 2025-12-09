@@ -8,11 +8,9 @@ export default async function handler(req, res) {
         return res.status(405).json({ message: 'Method not allowed' });
     }
 
-    // Rate limiting: максимум 5 попыток за 15 минут
     const clientIP = getClientIP(req);
     const rateLimit = checkRateLimit(clientIP, 5, 15 * 60 * 1000);
 
-    // Добавляем заголовки rate limit в каждый ответ
     res.setHeader('X-RateLimit-Limit', '5');
     res.setHeader('X-RateLimit-Remaining', rateLimit.remaining.toString());
     res.setHeader('X-RateLimit-Reset', rateLimit.resetTime.toISOString());
@@ -56,7 +54,6 @@ export default async function handler(req, res) {
             });
         }
 
-        // Проверяем, что пользователь имеет роль admin или superadmin
         if (user.role !== 'admin' && user.role !== 'superadmin') {
             return res.status(403).json({
                 message: 'Access denied. Admin role required.',
@@ -64,11 +61,9 @@ export default async function handler(req, res) {
             });
         }
 
-        // Сбрасываем rate limit при успешном входе
         resetRateLimit(clientIP);
 
-        user.lastLogin = new Date();
-        await user.save();
+        await User.updateOne({ _id: user._id }, { lastLogin: new Date() });
 
         const token = generateToken(user._id);
 

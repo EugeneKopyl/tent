@@ -1,10 +1,14 @@
 import ErrorBoundary from '../../components/ErrorBoundary';
 import AdminPartsTab from './AdminPartsTab';
 import AdminInfoTab from './AdminInfoTab';
+import AdminWorksTab from './AdminWorksTab';
+import AdminNewsTab from './AdminNewsTab';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { useAuthGuard } from '@/lib/authGuard';
 
 function AdminDashboardLayout() {
+    const { isChecking } = useAuthGuard();
     const [tab, setTab] = useState('parts');
     const [users, setUsers] = useState([]);
     const [userRole, setUserRole] = useState(null);
@@ -13,6 +17,8 @@ function AdminDashboardLayout() {
     const router = useRouter();
 
     useEffect(() => {
+        if (isChecking) return;
+
         async function fetchRole() {
             try {
                 const res = await fetch('/api/admin/verify', {
@@ -25,13 +31,16 @@ function AdminDashboardLayout() {
                     if (data.role === 'superadmin') {
                         setTab('admin');
                     }
+                } else {
+                    router.push('/');
                 }
             } catch (e) {
                 console.error('Error fetching role:', e);
+                router.push('/');
             }
         }
         fetchRole();
-    }, []);
+    }, [isChecking, router]);
 
     const fetchUsers = async () => {
         setLoadingUsers(true);
@@ -83,6 +92,17 @@ function AdminDashboardLayout() {
         router.push('/admin/login');
     };
 
+    if (isChecking) {
+        return (
+            <div
+                className="d-flex justify-content-center align-items-center"
+                style={{ height: '100vh' }}
+            >
+                <div className="text-muted">Проверка аутентификации...</div>
+            </div>
+        );
+    }
+
     return (
         <ErrorBoundary>
             <div className="container-fluid p-3 bg-light">
@@ -113,6 +133,22 @@ function AdminDashboardLayout() {
                             Все запчасти
                         </button>
                     </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${tab === 'works' ? 'active' : ''}`}
+                            onClick={() => setTab('works')}
+                        >
+                            Галерея работ
+                        </button>
+                    </li>
+                    <li className="nav-item">
+                        <button
+                            className={`nav-link ${tab === 'news' ? 'active' : ''}`}
+                            onClick={() => setTab('news')}
+                        >
+                            Новости
+                        </button>
+                    </li>
                 </ul>
                 <div>
                     {tab === 'admin' && userRole === 'superadmin' && (
@@ -125,6 +161,8 @@ function AdminDashboardLayout() {
                         />
                     )}
                     {tab === 'parts' && <AdminPartsTab userRole={userRole} />}
+                    {tab === 'works' && <AdminWorksTab userRole={userRole} />}
+                    {tab === 'news' && <AdminNewsTab userRole={userRole} />}
                 </div>
             </div>
         </ErrorBoundary>

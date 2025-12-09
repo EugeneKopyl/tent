@@ -8,8 +8,8 @@ export default function Index() {
     return (
         <div
             className={styles.homePage}
-            itemscope=""
-            itemtype="https://schema.org/ImageObject"
+            itemScope=""
+            itemType="https://schema.org/ImageObject"
         >
             <Head>
                 <title>
@@ -27,7 +27,7 @@ export default function Index() {
                 width={1900}
                 height={475}
                 className={styles.homeBanner}
-                itemprop="contentUrl"
+                itemProp="contentUrl"
             />
 
             <div className="container py-4">

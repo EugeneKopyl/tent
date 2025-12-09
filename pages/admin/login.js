@@ -45,14 +45,20 @@ function AdminLoginContent() {
                 body: JSON.stringify({ username, password }),
             });
 
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch (jsonError) {
+                setError('Ошибка сервера. Попробуйте позже.');
+                setLoading(false);
+                return;
+            }
 
             if (response.ok) {
                 router.push('/admin/dashboard');
             } else {
-                let errorMessage = data.message || 'Login failed';
+                let errorMessage = data.message || 'Ошибка входа';
 
-                // Добавляем информацию об оставшихся попытках
                 if (
                     data.remainingAttempts !== undefined &&
                     data.remainingAttempts >= 0
@@ -60,17 +66,21 @@ function AdminLoginContent() {
                     errorMessage += ` (Осталось попыток: ${data.remainingAttempts})`;
                 }
 
-                // Специальная обработка для rate limit
                 if (response.status === 429) {
                     errorMessage =
                         data.message ||
                         'Слишком много попыток входа. Попробуйте позже.';
                 }
 
+                if (response.status === 500) {
+                    errorMessage = 'Ошибка сервера. Попробуйте позже.';
+                }
+
                 setError(errorMessage);
             }
         } catch (error) {
-            setError('Network error. Please try again.');
+            console.error('Login error:', error);
+            setError('Ошибка сети. Проверьте подключение и попробуйте снова.');
         } finally {
             setLoading(false);
         }

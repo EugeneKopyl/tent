@@ -5,11 +5,9 @@ import dbConnect from '@/lib/mongodb';
 import fs from 'fs';
 import path from 'path';
 
-// Создаем директорию для бэкапов, если её нет
 const BACKUP_DIR = path.resolve(process.cwd(), 'backups');
 const PARTS_BACKUP_PATH = path.resolve(BACKUP_DIR, 'parts.json');
 
-// Убеждаемся, что директория существует
 if (!fs.existsSync(BACKUP_DIR)) {
     try {
         fs.mkdirSync(BACKUP_DIR, { recursive: true });
@@ -45,16 +43,13 @@ export default async function handler(req, res) {
     const action = req.query.action;
 
     if (action === 'backup') {
-        // Бэкап всех Part
         try {
             const allParts = await Part.find({}).lean();
 
-            // Убеждаемся, что директория существует перед записью
             if (!fs.existsSync(BACKUP_DIR)) {
                 fs.mkdirSync(BACKUP_DIR, { recursive: true });
             }
 
-            // Сохраняем с временной меткой в имени файла
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
             const backupFile = path.resolve(
                 BACKUP_DIR,
@@ -67,7 +62,6 @@ export default async function handler(req, res) {
                 'utf-8',
             );
 
-            // Также сохраняем последний бэкап как parts.json для быстрого восстановления
             fs.writeFileSync(
                 PARTS_BACKUP_PATH,
                 JSON.stringify(allParts, null, 2),
@@ -87,7 +81,6 @@ export default async function handler(req, res) {
                 .json({ message: 'Backup failed', error: e.message });
         }
     } else if (action === 'restore') {
-        // Восстановление из файла parts.json
         try {
             if (!fs.existsSync(PARTS_BACKUP_PATH)) {
                 return res.status(404).json({
@@ -122,7 +115,6 @@ export default async function handler(req, res) {
                 .json({ message: 'Restore failed', error: e.message });
         }
     } else if (action === 'download') {
-        // Скачать бэкап как файл
         try {
             const allParts = await Part.find({}).lean();
             const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
@@ -141,7 +133,6 @@ export default async function handler(req, res) {
                 .json({ message: 'Download failed', error: e.message });
         }
     } else if (action === 'upload') {
-        // Загрузить бэкап из файла
         try {
             if (!req.body || !Array.isArray(req.body)) {
                 return res.status(400).json({
@@ -151,14 +142,12 @@ export default async function handler(req, res) {
 
             const partsData = req.body;
 
-            // Валидация данных
             if (partsData.length === 0) {
                 return res.status(400).json({
                     message: 'Backup file is empty',
                 });
             }
 
-            // Сохраняем бэкап перед восстановлением
             if (!fs.existsSync(BACKUP_DIR)) {
                 fs.mkdirSync(BACKUP_DIR, { recursive: true });
             }
@@ -174,7 +163,6 @@ export default async function handler(req, res) {
                 'utf-8',
             );
 
-            // Восстанавливаем данные
             await Part.deleteMany({});
             await Part.insertMany(partsData);
 
