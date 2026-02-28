@@ -3,18 +3,25 @@ import NewsCategory from '@/models/NewsCategory';
 import News from '@/models/News';
 import connectDB from '@/lib/mongodb';
 import { generateSlug } from '@/lib/helpers';
+import { get, set, invalidate } from '@/lib/cache';
 
 export default async function handler(req, res) {
     await connectDB();
 
     if (req.method === 'GET') {
-        try {
-            const { slug, preview } = req.query;
+        const { slug, preview } = req.query;
+        const isPreview = preview === 'true';
 
-            if (slug) {
+        if (slug) {
+            const cacheKey = `news:item:${slug}${isPreview ? ':preview' : ''}`;
+            const cached = get(cacheKey);
+            if (cached) {
+                return res.status(200).json(cached);
+            }
+            try {
                 const query = { slug };
-                if (preview !== 'true') {
-                    query.$or = [{ published: true }];
+                if (!isPreview) {
+                    query.published = true;
                 }
 
                 const NewsModel = mongoose.models.News || News;
@@ -37,11 +44,26 @@ export default async function handler(req, res) {
                     normalized.previewImage = '/logo512.png';
                 }
 
+                set(cacheKey, normalized);
                 return res.status(200).json(normalized);
+            } catch (error) {
+                console.error('Error fetching news:', error);
+                if (cached) {
+                    return res.status(200).json(cached);
+                }
+                return res
+                    .status(500)
+                    .json({ message: 'Failed to fetch news' });
             }
+        }
 
-            const query =
-                preview === 'true' ? {} : { $or: [{ published: true }] };
+        const listCacheKey = isPreview ? 'news:list:preview' : 'news:list';
+        const cached = get(listCacheKey);
+        if (cached) {
+            return res.status(200).json(cached);
+        }
+        try {
+            const query = isPreview ? {} : { published: true };
 
             const NewsModel = mongoose.models.News || News;
 
@@ -65,9 +87,15 @@ export default async function handler(req, res) {
                 return normalized;
             });
 
+            if (normalizedList.length > 0) {
+                set(listCacheKey, normalizedList);
+            }
             return res.status(200).json(normalizedList);
         } catch (error) {
             console.error('Error fetching news:', error);
+            if (cached) {
+                return res.status(200).json(cached);
+            }
             return res.status(500).json({ message: 'Failed to fetch news' });
         }
     }
@@ -103,6 +131,7 @@ export default async function handler(req, res) {
                 }
             }
 
+            invalidate('news:');
             return res.status(201).json(populated);
         } catch (error) {
             console.error('Error creating news:', error);
@@ -136,6 +165,7 @@ export default async function handler(req, res) {
                 return res.status(404).json({ message: 'News not found' });
             }
 
+            invalidate('news:');
             return res.status(200).json(updatedNews);
         } catch (error) {
             console.error('Error updating news:', error);
@@ -150,6 +180,7 @@ export default async function handler(req, res) {
             if (!deleted) {
                 return res.status(404).json({ message: 'News not found' });
             }
+            invalidate('news:');
             return res.status(200).json({ message: 'Deleted successfully' });
         } catch (error) {
             console.error('Error deleting news:', error);

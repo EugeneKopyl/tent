@@ -25,6 +25,8 @@ function AdminNewsTab() {
         published: false,
     });
     const [showCategoryModal, setShowCategoryModal] = useState(false);
+    const [cacheMsg, setCacheMsg] = useState('');
+    const [cacheLoading, setCacheLoading] = useState(false);
     const [categoryForm, setCategoryForm] = useState({
         name: '',
         description: '',
@@ -417,17 +419,54 @@ function AdminNewsTab() {
         window.open(previewUrl, '_blank', 'noopener,noreferrer');
     };
 
+    const refreshCache = async () => {
+        setCacheLoading(true);
+        setCacheMsg('');
+        try {
+            const res = await fetch('/api/cache/refresh', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'news' }),
+            });
+            const data = await res.json();
+            setCacheMsg(res.ok ? 'Кэш обновлён' : `Ошибка: ${data.message}`);
+        } catch (e) {
+            setCacheMsg('Ошибка сети');
+        }
+        setCacheLoading(false);
+    };
+
     return (
         <div>
             <div className="mb-3 d-flex justify-content-between align-items-center">
                 <h4>Управление новостями</h4>
-                <div className="d-flex gap-2">
+                <div className="d-flex gap-2 align-items-center">
                     <button
                         className="btn btn-info btn-sm"
                         onClick={() => setShowCategoryModal(true)}
                     >
                         Управление категориями
                     </button>
+                    <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={refreshCache}
+                        disabled={cacheLoading}
+                        title="Очистить кэш и принудительно обновить при следующем запросе"
+                    >
+                        {cacheLoading ? '...' : 'Обновить кэш'}
+                    </button>
+                    {cacheMsg && (
+                        <span
+                            className="small"
+                            style={{
+                                color: cacheMsg.includes('Ошибка')
+                                    ? '#dc3545'
+                                    : '#28a745',
+                            }}
+                        >
+                            {cacheMsg}
+                        </span>
+                    )}
                     {creating ? (
                         <>
                             <button
