@@ -17,6 +17,8 @@ function AdminPartsTab({ userRole }) {
     const [backupMsg, setBackupMsg] = useState('');
     const [backupLoading, setBackupLoading] = useState(false);
     const [restoreFile, setRestoreFile] = useState(null);
+    const [cacheMsg, setCacheMsg] = useState('');
+    const [cacheLoading, setCacheLoading] = useState(false);
 
     useEffect(() => {
         fetchParts();
@@ -311,8 +313,51 @@ function AdminPartsTab({ userRole }) {
             reader.readAsDataURL(file);
         }
     }
+
+    const refreshCache = async () => {
+        setCacheLoading(true);
+        setCacheMsg('');
+        try {
+            const res = await fetch('/api/cache/refresh', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'parts' }),
+            });
+            const data = await res.json();
+            setCacheMsg(res.ok ? 'Кэш обновлён' : `Ошибка: ${data.message}`);
+        } catch (e) {
+            setCacheMsg('Ошибка сети');
+        }
+        setCacheLoading(false);
+    };
+
     return (
         <div>
+            <div className="mb-3 d-flex justify-content-between align-items-center">
+                <h4>Управление запчастями</h4>
+                <div className="d-flex gap-2 align-items-center">
+                    <button
+                        className="btn btn-outline-secondary btn-sm"
+                        onClick={refreshCache}
+                        disabled={cacheLoading}
+                        title="Очистить кэш и принудительно обновить при следующем запросе"
+                    >
+                        {cacheLoading ? '...' : 'Обновить кэш'}
+                    </button>
+                    {cacheMsg && (
+                        <span
+                            className="small"
+                            style={{
+                                color: cacheMsg.includes('Ошибка')
+                                    ? '#dc3545'
+                                    : '#28a745',
+                            }}
+                        >
+                            {cacheMsg}
+                        </span>
+                    )}
+                </div>
+            </div>
             {userRole === 'superadmin' && (
                 <div
                     style={{

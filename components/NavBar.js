@@ -118,7 +118,7 @@ export default function NavBar() {
                             </div>
                             <div itemProp="openingHours">
                                 <time>8:30-20:00</time>
-                                <div>ежедневно</div>
+                                <div>выходной: СБ, ВС</div>
                             </div>
                         </div>
                     </div>

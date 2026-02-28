@@ -14,19 +14,19 @@
         "bootstrap": "^5.3.8",
         "browser-image-compression": "^2.0.2",
         "jsonwebtoken": "^9.0.3",
-        "mongodb": "^7.0.0",
-        "mongoose": "^9.0.1",
-        "next": "16.0.8",
-        "react": "^19.2.1",
+        "mongodb": "^7.1.0",
+        "mongoose": "^9.2.3",
+        "next": "^16.1.6",
+        "react": "^19.2.4",
         "react-bootstrap": "^2.10.10",
-        "react-dom": "^19.2.1",
-        "react-quill-new": "^3.6.0",
-        "react-router-dom": "^7.10.1",
-        "sass": "^1.95.0"
+        "react-dom": "^19.2.4",
+        "react-quill-new": "^3.8.3",
+        "react-router-dom": "^7.13.1",
+        "sass": "^1.97.3"
     },
     "devDependencies": {
-        "eslint": "^9.39.1",
-        "eslint-config-next": "^16.0.8",
-        "prettier": "^3.7.4"
+        "eslint": "^10.0.2",
+        "eslint-config-next": "^16.1.6",
+        "prettier": "^3.8.1"
     }
 }

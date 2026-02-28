@@ -1,21 +1,33 @@
 import Part from '@/models/Part';
 import dbConnect from '@/lib/mongodb';
 import { partsItems } from '@/constants/parts';
+import { get, set, invalidate } from '@/lib/cache';
+
+const CACHE_KEY = 'parts:list';
 
 export default async function handler(req, res) {
     await dbConnect();
 
     if (req.method === 'GET') {
+        const cached = get(CACHE_KEY);
+        if (cached) {
+            return res.status(200).json(cached);
+        }
         try {
-            const parts = await Part.find({}).lean();
+            const parts = await Part.find({})
+                .sort({ order: 1, createdAt: -1 })
+                .lean();
             if (parts && parts.length > 0) {
+                set(CACHE_KEY, parts);
                 return res.status(200).json(parts);
-            } else {
-                console.log('No data in DB, using constant fallback');
-                return res.status(200).json(partsItems);
             }
+            console.log('No data in DB, using constant fallback');
+            return res.status(200).json(partsItems);
         } catch (error) {
             console.error('Error fetching parts from DB:', error);
+            if (cached) {
+                return res.status(200).json(cached);
+            }
             return res.status(200).json(partsItems);
         }
     }
@@ -24,6 +36,7 @@ export default async function handler(req, res) {
         try {
             const part = new Part(req.body);
             await part.save();
+            invalidate('parts:');
             return res.status(201).json(part);
         } catch (error) {
             console.error('Error creating part:', error);
@@ -42,6 +55,7 @@ export default async function handler(req, res) {
             if (!updatedPart) {
                 return res.status(404).json({ message: 'Part not found' });
             }
+            invalidate('parts:');
             return res.status(200).json(updatedPart);
         } catch (error) {
             console.error('Error updating part:', error);
@@ -56,6 +70,7 @@ export default async function handler(req, res) {
             if (!deleted) {
                 return res.status(404).json({ message: 'Part not found' });
             }
+            invalidate('parts:');
             return res.status(200).json({ message: 'Deleted successfully' });
         } catch (error) {
             console.error('Error deleting part:', error);

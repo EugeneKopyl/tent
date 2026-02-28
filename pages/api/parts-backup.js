@@ -2,6 +2,7 @@ import Part from '@/models/Part';
 import User from '@/models/User';
 import { verifyToken, getTokenFromRequest } from '@/lib/auth';
 import dbConnect from '@/lib/mongodb';
+import { invalidate } from '@/lib/cache';
 import fs from 'fs';
 import path from 'path';
 
@@ -102,6 +103,7 @@ export default async function handler(req, res) {
             if (partsData.length > 0) {
                 await Part.insertMany(partsData);
             }
+            invalidate('parts:');
 
             return res.status(200).json({
                 success: true,
@@ -165,6 +167,7 @@ export default async function handler(req, res) {
 
             await Part.deleteMany({});
             await Part.insertMany(partsData);
+            invalidate('parts:');
 
             return res.status(200).json({
                 success: true,
