@@ -329,23 +329,7 @@ export default function ContactsPage() {
                                     />
                                     Суббота
                                 </th>
-                                <td>
-                                    <time
-                                        dateTime="08:30:00"
-                                        itemProp="opens"
-                                        content="08:30"
-                                    >
-                                        08:30
-                                    </time>
-                                    {' – '}
-                                    <time
-                                        dateTime="20:00:00"
-                                        itemProp="closes"
-                                        content="20:00"
-                                    >
-                                        20:00
-                                    </time>
-                                </td>
+                                <td>Выходной</td>
                             </tr>
                             <tr className="table-danger">
                                 <th scope="row" itemProp="name">
@@ -355,23 +339,7 @@ export default function ContactsPage() {
                                     />
                                     Воскресенье
                                 </th>
-                                <td>
-                                    <time
-                                        dateTime="08:30:00"
-                                        itemProp="opens"
-                                        content="08:30"
-                                    >
-                                        08:30
-                                    </time>
-                                    {' – '}
-                                    <time
-                                        dateTime="20:00:00"
-                                        itemProp="closes"
-                                        content="20:00"
-                                    >
-                                        20:00
-                                    </time>
-                                </td>
+                                <td>Выходной</td>
                             </tr>
                         </tbody>
                     </table>
