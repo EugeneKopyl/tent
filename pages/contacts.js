@@ -56,7 +56,7 @@ export default function ContactsPage() {
                     'Sunday',
                 ],
                 opens: '08:30',
-                closes: '20:00',
+                closes: '17:00',
             },
         ],
         url: `${getBaseUrl()}/contacts`,
@@ -209,11 +209,11 @@ export default function ContactsPage() {
                                     </time>
                                     {' – '}
                                     <time
-                                        dateTime="20:00:00"
+                                        dateTime="17:00:00"
                                         itemProp="closes"
-                                        content="20:00"
+                                        content="17:00"
                                     >
-                                        20:00
+                                        17:00
                                     </time>
                                 </td>
                             </tr>
@@ -235,11 +235,11 @@ export default function ContactsPage() {
                                     </time>
                                     {' – '}
                                     <time
-                                        dateTime="20:00:00"
+                                        dateTime="17:00:00"
                                         itemProp="closes"
-                                        content="20:00"
+                                        content="17:00"
                                     >
-                                        20:00
+                                        17:00
                                     </time>
                                 </td>
                             </tr>
@@ -261,11 +261,11 @@ export default function ContactsPage() {
                                     </time>
                                     {' – '}
                                     <time
-                                        dateTime="20:00:00"
+                                        dateTime="17:00:00"
                                         itemProp="closes"
-                                        content="20:00"
+                                        content="17:00"
                                     >
-                                        20:00
+                                        17:00
                                     </time>
                                 </td>
                             </tr>
@@ -287,11 +287,11 @@ export default function ContactsPage() {
                                     </time>
                                     {' – '}
                                     <time
-                                        dateTime="20:00:00"
+                                        dateTime="17:00:00"
                                         itemProp="closes"
-                                        content="20:00"
+                                        content="17:00"
                                     >
-                                        20:00
+                                        17:00
                                     </time>
                                 </td>
                             </tr>
@@ -313,11 +313,11 @@ export default function ContactsPage() {
                                     </time>
                                     {' – '}
                                     <time
-                                        dateTime="20:00:00"
+                                        dateTime="17:00:00"
                                         itemProp="closes"
-                                        content="20:00"
+                                        content="17:00"
                                     >
-                                        20:00
+                                        17:00
                                     </time>
                                 </td>
                             </tr>
